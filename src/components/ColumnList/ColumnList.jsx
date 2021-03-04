@@ -20,7 +20,8 @@ export const ColumnList = () => {
     if (title) {
       const column = {
         id: nanoid(),
-        title
+        title,
+        tasks: [],
       }
 
       dispatch(addColumn(column));
@@ -29,24 +30,15 @@ export const ColumnList = () => {
     }
   }
 
-  const handleResetAddingColumn = (e) => {
-    if (e) {
-      setIsCreateColumn(false);
-    }
-  }
+  const handleResetAddingColumn = () => setIsCreateColumn(false)
 
-  const handleDeleteColumnItem = (e, id) => {
-    if (e) {
-      console.log(columnList);
-      dispatch(removeColumn(id));
-    }
-  }
+  const handleDeleteColumnItem = (id) => dispatch(removeColumn(id));
 
   return <>
     <div className='columns'>
       <ul className='ul_columns'>
 
-        { columnList.length > 0 ? 
+        { columnList.length ? 
           columnList.map(({ title, id }) => <li key={id} className='li_column'>
           <ColumnItem title={title} deleteColumn={handleDeleteColumnItem} id={id} />
         </li> ) 
@@ -54,11 +46,12 @@ export const ColumnList = () => {
 
       </ul>
 
-      {isCreateColumn && <CreateColumnForm value={title} setValue={setTitle} addColumn={handleAddColumn} resetAddingColumn={handleResetAddingColumn} /> }
+      {isCreateColumn && <CreateColumnForm value={title} setValue={setTitle} addColumn={handleAddColumn} 
+      resetAddingColumn={handleResetAddingColumn} /> }
     
-      <button onClick={() => setIsCreateColumn(true)} className='column_btn'>
+      {!isCreateColumn && <button onClick={() => setIsCreateColumn(true)} className='column_btn'>
         Add column +
-      </button>
+      </button>}
 
     </div>     
 

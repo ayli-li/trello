@@ -1,11 +1,7 @@
 import React from 'react';
 
-export const AddTask = ({ value }) => {
-  return <div>
-    <form>
-      <textarea value={value}>
-
-      </textarea>
-    </form>
+export const CardTask = ({ id, value }) => {
+  return <div id={id}>
+    {value}
   </div>
 }

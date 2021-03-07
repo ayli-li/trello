@@ -37,21 +37,20 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
     setIsCreateTask(true);
   }
 
+  const handleResetAddingTask = () => setIsCreateTask(false);
+
+  const handleDeleteTask = (id) => dispatch(removeTask(id));
+
   return <>
     <div className='column' id={id}>
       <div className='column_items'>
-        {title}
+        <span className='column_title'>{title}</span>
         <span className='close_symbol' onClick={() => deleteColumn(id) }>x</span>
       </div>   
 
-      {/* {console.log(columnList.map(column => column.id === id))}   */}
+      {columnList.length && columnList.filter(column => column.id === id).map(({ tasks }) => tasks.map(({ titleCard, id }) => <CardTask id={id} value={titleCard} key={id} /> )) }
 
-      {columnList.map(column => column.id === id ? column.map(({ tasks }) => tasks.map(({ titleCard, id }) => <CardTask id={id} value={titleCard} key={id} /> )) : false ) }
-
-
-      {/* { columnList.map(({ tasks }) => tasks.map(({ titleCard, id }) => <CardTask id={id} value={titleCard} key={id} /> )) }  */}
-
-      {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} />}       
+      {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} />}       
 
       <button className='column_btn column_item-btn' onClick={handleAddTask}>Add task</button>      
 

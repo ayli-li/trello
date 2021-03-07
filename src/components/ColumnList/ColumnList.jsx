@@ -30,7 +30,7 @@ export const ColumnList = () => {
     }
   }
 
-  const handleResetAddingColumn = () => setIsCreateColumn(false)
+  const handleResetAddingColumn = () => setIsCreateColumn(false);
 
   const handleDeleteColumnItem = (id) => dispatch(removeColumn(id));
 

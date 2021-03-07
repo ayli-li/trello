@@ -13,3 +13,7 @@
 .column_item-btn {
   border: none;
 }
+
+.column_title {
+  font-weight: bold;
+}

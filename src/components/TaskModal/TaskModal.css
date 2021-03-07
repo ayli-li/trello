@@ -1,0 +1,13 @@
+.task_modal {
+  position: absolute;
+  top: 50%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-width: 500px;
+  background-color: gray;
+}

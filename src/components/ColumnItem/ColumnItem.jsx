@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 
@@ -13,6 +13,7 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
 
   const [isCreateTask, setIsCreateTask] = useState(false);
   const [titleCard, setTitleCard] = useState('');
+  const [descriptionCard, setDescriptionCard] = useState('');
   const [isShowModal, setIsShowModal] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
 
@@ -26,10 +27,10 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
       const task = {
         id: nanoid(),
         titleCard,
-        description: ''
+        descriptionCard
       }
 
-      dispatch(addTask(task,id));
+      dispatch(addTask(task, id));
       setTitleCard('');
     }    
   }
@@ -41,6 +42,10 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
     setIsCreateTask(true);
   }
 
+  useEffect(() => {
+    console.log(descriptionCard)
+  }, [descriptionCard]);
+
   const handleResetAddingTask = () => setIsCreateTask(false);
 
   const handleDeleteTask = (id) => dispatch(removeTask(id));
@@ -49,12 +54,11 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
     const currentColumn = columnList.find(column => column.id === id);
 
     const task = currentColumn.tasks.find(task => task.id === idTask);
-    if(task){
+    if (task) {
       setCurrentTask(task);
       setIsShowModal(true);
     }
-  } 
- 
+  }  
 
   return <>
     <div className='column' id={id}>
@@ -73,6 +77,6 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
 
     </div>
 
-    {isShowModal && <TaskModal taskInfo={currentTask} showModal={setIsShowModal} /> }
+    {isShowModal && <TaskModal value={descriptionCard} taskInfo={currentTask} setDescription={setDescriptionCard} showModal={setIsShowModal} /> }
   </>
 }

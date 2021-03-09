@@ -2,7 +2,8 @@ import {
   ADD_COLUMN,
   REMOVE_COLUMN,
   ADD_TASK,
-  REMOVE_TASK
+  REMOVE_TASK,
+  ADD_DESCRIPTION
 } from './constants';
 
 export const addColumn = (column) => ({
@@ -25,3 +26,9 @@ export const removeTask = (id) => ({
   type: REMOVE_TASK,
   id
 })
+
+// export const addTaskDesription = (description, id) => ({
+//   type: ADD_DESCRIPTION,
+//   description,
+//   id
+// })

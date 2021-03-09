@@ -3,7 +3,8 @@ import {
   ADD_COLUMN,
   REMOVE_COLUMN,
   ADD_TASK,
-  REMOVE_TASK
+  REMOVE_TASK,
+  ADD_DESCRIPTION
 } from "./constants"
 
 const initialState = {
@@ -15,17 +16,12 @@ const updateColumnList = (state, { column }) => ({
   columnList: [...state.columnList, column],
 })
 
-const removeItemFromColumnList = (state, {
-  id
-}) => ({
+const removeItemFromColumnList = (state, { id }) => ({
   ...state,
   columnList: state.columnList.filter(column => column.id !== id)
 })
 
-const addTaskToColumn = (state, {
-  task,
-  id
-}) => {
+const addTaskToColumn = (state, { task, id }) => {
   return {
     ...state,
     columnList: state.columnList.map(column => {
@@ -41,15 +37,27 @@ const addTaskToColumn = (state, {
   }
 }
 
-const removeTaskFromColumn = (state, {
-  id
-}) => ({
+const removeTaskFromColumn = (state, { id }) => ({
   ...state,
   columnList: state.columnList.map(column => ({
     ...column,
     tasks: [...column.tasks.filter(task => task.id !== id)]
   }))
 })
+
+// const addTaskDesription = (state, { description, id }) => ({
+//   ...state,
+//   columnList: state.columnList.map(column => {
+//     if (column.id === id) {
+//       return({
+//         ...column,
+//         tasks: [...column.tasks, task.description]
+//       })
+//     }
+
+//     return column;
+//   })
+// })
 
 const strategyMap = {
   [ADD_COLUMN]: updateColumnList,

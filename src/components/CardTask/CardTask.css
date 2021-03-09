@@ -1,3 +1,8 @@
 .card_task {
   cursor: pointer;
 }
+
+.card_task:hover {
+  color: #fffffa;
+  background-color: lightgray;
+}

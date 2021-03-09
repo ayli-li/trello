@@ -20,8 +20,7 @@ export const ColumnList = () => {
     if (title) {
       const column = {
         id: nanoid(),
-        title,
-        tasks: [],
+        title
       }
 
       dispatch(addColumn(column));

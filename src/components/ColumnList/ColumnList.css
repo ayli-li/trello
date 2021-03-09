@@ -10,7 +10,7 @@
 .ul_columns {
   display: flex;
   flex-flow: row wrap;
-  justify-content: start;  
+  justify-content: flex-start;  
   list-style: none;
   padding: 0px;  
   margin: 0;

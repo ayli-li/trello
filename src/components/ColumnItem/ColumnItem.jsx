@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 
 import { CreateTaskForm } from '../CreateTaskForm/CreateTaskForm';
 import { CardTask } from '../CardTask/CardTask';
 import { TaskModal } from '../TaskModal/TaskModal';
-import { addTask, removeTask } from '../../store/column/action';
+import { addTask, removeTask } from '../../store/task/action';
 
 import './ColumnItem.css'
 
@@ -17,20 +17,21 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
 
-  const columnList = useSelector(state => state.columns.columnList);
-  const filteredColumnList = columnList.filter(column => column.id === id);
+  const tasks = useSelector(state => state.tasks.tasks);
+  const filteredTasks = tasks.filter(task => task.columnId === id);
 
   const dispatch = useDispatch();
 
   const createTask = () => {
     if (titleCard) {
       const task = {
+        columnId: id,
         id: nanoid(),
         titleCard,
-        descriptionCard
+        descriptionCard: ''
       }
 
-      dispatch(addTask(task, id));
+      dispatch(addTask(task));
       setTitleCard('');
     }    
   }
@@ -39,26 +40,22 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
     if (titleCard && isCreateTask) {
       createTask();
     }
+
     setIsCreateTask(true);
   }
-
-  useEffect(() => {
-    console.log(descriptionCard)
-  }, [descriptionCard]);
 
   const handleResetAddingTask = () => setIsCreateTask(false);
 
   const handleDeleteTask = (id) => dispatch(removeTask(id));
 
-  const findCurrentTask = (idTask) => {
-    const currentColumn = columnList.find(column => column.id === id);
-
-    const task = currentColumn.tasks.find(task => task.id === idTask);
+  const addCurrentTask = (idTask) => {
+    const task = tasks.find(task => task.id === idTask);
+    
     if (task) {
       setCurrentTask(task);
       setIsShowModal(true);
     }
-  }  
+  }
 
   return <>
     <div className='column' id={id}>
@@ -67,9 +64,7 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
         <span className='close_symbol' onClick={() => deleteColumn(id) }>x</span>
       </div>   
 
-      {filteredColumnList.map(({ tasks }) => tasks
-                                      .map(({ titleCard, id }) => 
-                                      <CardTask id={id} value={titleCard} key={id} findCurrentTask={findCurrentTask} deleteTask={handleDeleteTask} /> )) }
+      {filteredTasks.map(({ titleCard, id }) => <CardTask id={id} value={titleCard} key={id} deleteTask={handleDeleteTask} addCurrentTask={addCurrentTask} /> ) }
 
       {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} />}       
 

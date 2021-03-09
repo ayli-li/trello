@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTaskDescription } from '../../store/task/action';
 
 import './TaskModal.css';
 
 export const TaskModal = ({ value, showModal, taskInfo, setDescription }) => {
 
   const [modalDescription, setModalDescription] = useState('');
+
+  const dispatch = useDispatch();
 
   const [clickedOutside, setClickedOutside] = useState(false);
   const myRef = useRef();
@@ -26,13 +30,18 @@ export const TaskModal = ({ value, showModal, taskInfo, setDescription }) => {
     showModal(!clickedOutside);
   }, [clickedOutside, showModal]);
 
+  const addDescription = (description) => {
+    dispatch(addTaskDescription(description, taskInfo.id));
+  }
+
   const handleAddDescription = () => {
     if (modalDescription) {
-      setDescription(modalDescription);
+      setDescription(modalDescription);      
     }
-  };
-
-  console.log(clickedOutside);
+    
+    addDescription(modalDescription);
+    setDescription('');
+  };  
   
   return <div className='task_modal' ref={myRef} onClick={handleClickInside}>
       <div className='modal_header'>

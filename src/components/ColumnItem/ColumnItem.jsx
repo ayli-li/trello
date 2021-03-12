@@ -64,7 +64,13 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
         <span className='close_symbol' onClick={() => deleteColumn(id) }>x</span>
       </div>   
 
-      {filteredTasks.map(({ titleCard, id }) => <CardTask id={id} value={titleCard} key={id} deleteTask={handleDeleteTask} addCurrentTask={addCurrentTask} /> ) }
+      {filteredTasks.map(({ titleCard, id }) => 
+        <CardTask 
+          id={id} 
+          value={titleCard} 
+          key={id} 
+          deleteTask={handleDeleteTask} 
+          addCurrentTask={addCurrentTask} /> ) }
 
       {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} />}       
 

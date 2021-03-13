@@ -9,7 +9,7 @@ import { addTask, removeTask } from '../../store/task/action';
 
 import './ColumnItem.css'
 
-export const ColumnItem = ({ title, deleteColumn, id }) => {
+export const ColumnItem = ({ title, deleteColumn, id, column }) => {
 
   const [isCreateTask, setIsCreateTask] = useState(false);
   const [titleCard, setTitleCard] = useState('');
@@ -18,6 +18,7 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
   const [currentTask, setCurrentTask] = useState(null);
 
   const tasks = useSelector(state => state.tasks.tasks);
+  const columnList = useSelector(state => state.columns.columnList);
   const filteredTasks = tasks.filter(task => task.columnId === id);
 
   const dispatch = useDispatch();
@@ -64,13 +65,17 @@ export const ColumnItem = ({ title, deleteColumn, id }) => {
         <span className='close_symbol' onClick={() => deleteColumn(id) }>x</span>
       </div>   
 
-      {filteredTasks.map(({ titleCard, id }) => 
+      {filteredTasks.map(task => 
         <CardTask 
-          id={id} 
-          value={titleCard} 
-          key={id} 
+          id={task.id} 
+          value={task.titleCard} 
+          key={task.id} 
           deleteTask={handleDeleteTask} 
-          addCurrentTask={addCurrentTask} /> ) }
+          addCurrentTask={addCurrentTask}
+          task={task}
+          column={column}
+          tasks={tasks}
+          columnList={columnList} /> ) }
 
       {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} />}       
 

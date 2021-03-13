@@ -38,8 +38,8 @@ export const ColumnList = () => {
       <ul className='ul_columns'>
 
         { columnList.length ? 
-          columnList.map(({ title, id }) => <li key={id} className='li_column'>
-          <ColumnItem title={title} deleteColumn={handleDeleteColumnItem} id={id} />
+          columnList.map(column => <li key={column.id} className='li_column'>
+          <ColumnItem title={column.title} deleteColumn={handleDeleteColumnItem} id={column.id} column={column} />
         </li> ) 
         : false }
 

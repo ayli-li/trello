@@ -7,8 +7,35 @@ import {
   CHANGE_TASKS_ORDER
 } from "./constants";
 
+const mockInitialState = [
+    {
+      columnId: '271ll9Q2ObqylRRmba0H9',
+      id: 'xDXt_zWtr2wK2XtcX-rMM',
+      titleCard: '11',
+      descriptionCard: ''
+    },
+    {
+      columnId: '271ll9Q2ObqylRRmba0H9',
+      id: 'xw53DUBoi-b1st2gOe7UO',
+      titleCard: '12',
+      descriptionCard: ''
+    },
+    {
+      columnId: 't8meGhNfGPUjf6Xeac428',
+      id: '8LdzKkpfKEkha0rJ3WkZO',
+      titleCard: '21',
+      descriptionCard: ''
+    },
+    {
+      columnId: 't8meGhNfGPUjf6Xeac428',
+      id: 'DQTRCKJnAsbLhM389I9ri',
+      titleCard: '22',
+      descriptionCard: ''
+    }
+  ]
+
 const initialState = {
-  tasks: []
+  tasks: mockInitialState
 }
 
 const addTaskToColumn = (state, { task }) => ({

@@ -5,8 +5,21 @@ import {
   CHANGE_COLUMN_ORDER
 } from "./constants"
 
+const mockInitialState = [
+  {
+    id: '271ll9Q2ObqylRRmba0H9',
+    columnOrder: 1,
+    title: '1'
+  },
+  {
+    id: 't8meGhNfGPUjf6Xeac428',
+    columnOrder: 2,
+    title: '2'
+  }
+]
+
 const initialState = {
-  columnList: [],
+  columnList: mockInitialState,
 }
 
 const updateColumnList = (state, { column }) => ({

@@ -27,7 +27,7 @@ export const ColumnList = () => {
       }
 
       dispatch(addColumn(column));
-      setColumnOrder(columnOrder + 1);
+      setColumnOrder(prev => prev + 1);
       setIsCreateColumn(false);
       setTitle('');
     }
@@ -53,12 +53,7 @@ export const ColumnList = () => {
     dispatch(changeColumnOrder(column, currentColumn)); 
   }
 
-  const sortColumns = (a, b) => {
-    if (a.columnOrder > b.columnOrder) {
-      return 1;
-    }
-    return -1;
-  }
+  const sortColumns = (a, b) => a.columnOrder - b.columnOrder;
 
   return <>
     <div className='columns'>

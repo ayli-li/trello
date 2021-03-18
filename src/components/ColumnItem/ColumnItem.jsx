@@ -9,7 +9,17 @@ import { addTask, removeTask } from '../../store/task/action';
 
 import './ColumnItem.css'
 
-export const ColumnItem = ({ title, deleteColumn, id, column, onDragStart, onDragLeave, onDragEnd, onDragOver, onDrop, draggable }) => {
+export const ColumnItem = ({ 
+  title, 
+  deleteColumn, 
+  id, 
+  column, 
+  onDragStart, 
+  onDragLeave, 
+  onDragEnd, 
+  onDragOver,
+  onDrop, 
+  draggable }) => {
 
   const [isCreateTask, setIsCreateTask] = useState(false);
   const [titleCard, setTitleCard] = useState('');
@@ -73,6 +83,7 @@ export const ColumnItem = ({ title, deleteColumn, id, column, onDragStart, onDra
   }
 
   const dragStartHandler = (e, column, task) => {
+    e.stopPropagation()
     setDragColumn(column);
     setDragTask(task);
     console.log(dragColumn);
@@ -83,22 +94,22 @@ export const ColumnItem = ({ title, deleteColumn, id, column, onDragStart, onDra
     e.target.style.boxShadow = 'none';
   }
 
-  const dropHanlder = (e, task) => {
+  const dropHanlder = (e, task, id) => {
     e.preventDefault();
     const currentIndex = tasks.indexOf(dragTask);
     tasks.splice(currentIndex, 1);
     const dropIndex = tasks.indexOf(task);
     tasks.splice(dropIndex + 1, 0, dragTask);
     //console.log(tasks);
-    // tasks.map(item => {
-    //   if (item.columnId === task.columnId) {
-    //     return task;
-    //   }
-    //   if (item.columnId === dragTask.columnId) {
-    //     return dragTask;
-    //   }
-    //   return item;
-    // })
+    tasks.map(item => {
+      if (item.columnId === task.columnId) {
+        return task;
+      }
+      if (item.columnId === dragTask.columnId) {
+        return dragTask;
+      }
+      return item;
+    })
   }
 
   return <>

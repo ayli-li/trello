@@ -1,2 +1,3 @@
 export const ADD_COLUMN = 'ADD_COLUMN';
 export const REMOVE_COLUMN = 'REMOVE_COLUMN';
+export const CHANGE_COLUMN_ORDER = 'CHANGE_COLUMN_ORDER';

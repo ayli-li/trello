@@ -3,7 +3,8 @@ import createReducer from "../../utils/createReducer";
 import {
   ADD_TASK,
   REMOVE_TASK,
-  ADD_DESCRIPTION
+  ADD_DESCRIPTION,
+  CHANGE_TASKS_ORDER
 } from "./constants";
 
 const initialState = {
@@ -32,6 +33,11 @@ const addTaskDescription = (state, { descriptionCard, id }) => ({
     return task;
   })
 })
+
+// const changeTasksOrder = (state, { task, currentIndex, dropIndex }) => ({
+//   ...state,
+//   tasks: 
+// })
 
 const strategyMap = {
   [ADD_TASK]: addTaskToColumn,

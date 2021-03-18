@@ -1,5 +1,6 @@
 .column {
   min-width: 200px;
+  cursor: grab;
 }
 
 .column_items {

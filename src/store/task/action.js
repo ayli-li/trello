@@ -1,7 +1,8 @@
 import {
   ADD_TASK,
   REMOVE_TASK,
-  ADD_DESCRIPTION
+  ADD_DESCRIPTION,
+  CHANGE_TASKS_ORDER
 } from './constants';
 
 export const addTask = (task) => ({
@@ -19,3 +20,10 @@ export const addTaskDescription = (descriptionCard, id) => ({
   descriptionCard,
   id
 });
+
+export const changeTasksOrder = (task, currentIndex, dropIndex) => ({
+  type: CHANGE_TASKS_ORDER,
+  task, 
+  currentIndex,
+  dropIndex
+})

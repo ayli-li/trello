@@ -1,6 +1,7 @@
 import {
   ADD_COLUMN,
-  REMOVE_COLUMN
+  REMOVE_COLUMN,
+  CHANGE_COLUMN_ORDER
 } from './constants';
 
 export const addColumn = (column) => ({
@@ -8,7 +9,13 @@ export const addColumn = (column) => ({
   column
 })
 
-export const removeColumn = (id) =>  ({
+export const removeColumn = (id) => ({
   type: REMOVE_COLUMN,
   id
+})
+
+export const changeColumnOrder = (column, currentColumn) => ({
+  type: CHANGE_COLUMN_ORDER,
+  column,
+  currentColumn
 })

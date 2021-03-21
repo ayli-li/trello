@@ -1,7 +1,7 @@
 import {
   ADD_COLUMN,
   REMOVE_COLUMN,
-  CHANGE_COLUMN_ORDER
+  ADD_TASK_ID
 } from './constants';
 
 export const addColumn = (column) => ({
@@ -14,8 +14,8 @@ export const removeColumn = (id) => ({
   id
 })
 
-export const changeColumnOrder = (column, currentColumn) => ({
-  type: CHANGE_COLUMN_ORDER,
-  column,
-  currentColumn
+export const addTaskIdToColumn = (taskId, columnId) => ({
+  type: ADD_TASK_ID,
+  taskId,
+  columnId
 })

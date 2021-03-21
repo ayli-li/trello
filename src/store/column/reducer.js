@@ -2,53 +2,64 @@ import createReducer from "../../utils/createReducer"
 import {
   ADD_COLUMN,
   REMOVE_COLUMN,
-  CHANGE_COLUMN_ORDER
+  ADD_TASK_ID
 } from "./constants"
 
-const mockInitialState = [
-  {
-    id: '271ll9Q2ObqylRRmba0H9',
-    columnOrder: 1,
-    title: '1'
-  },
-  {
-    id: 't8meGhNfGPUjf6Xeac428',
-    columnOrder: 2,
-    title: '2'
-  }
-]
+// const mockInitialState = [
+//   {
+//     id: '271ll9Q2ObqylRRmba0H9',
+//     columnOrder: 1,
+//     title: '1'
+//   },
+//   {
+//     id: 't8meGhNfGPUjf6Xeac428',
+//     columnOrder: 2,
+//     title: '2'
+//   }
+// ]
 
 const initialState = {
-  columnList: mockInitialState,
+  columnList: {},
 }
 
 const updateColumnList = (state, { column }) => ({
   ...state,
-  columnList: [...state.columnList, column],
+  columnList: {...state.columnList, column}
 })
 
-const removeItemFromColumnList = (state, { id }) => ({
-  ...state,
-  columnList: state.columnList.filter(column => column.id !== id)
-})
+const removeItemFromColumnList = (state, { id }) => {
+  for (let key of Object.keys(state.columnList)) {
 
-const changeColumnOrder = (state, { column, currentColumn }) => ({
-  ...state,
-  columnList: state.columnList.map(item => {
-    if (item.id === column.id) {
-      return {...item, columnOrder: currentColumn.columnOrder};
+    if (state.columnList[key].id === id) {
+      delete state.columnList[key];
+    } 
+
+    return {
+      ...state,
+      columnList: state.columnList
     }
-    if (item.id === currentColumn.id) {
-      return {...item, columnOrder: column.columnOrder};
+  }
+}
+
+const addTaskIdToColumn = (state, { taskId, columnId }) => {
+  for (let key of Object.keys(state.columnList)) {
+
+    if (state.columnList[key].id === columnId) {
+      state.columnList[key].taskIds.push(taskId);
     }
-    return item;
-  })
-})
+
+    return {
+      ...state,
+      columnList: state.columnList
+    }
+  }
+}
+
 
 const strategyMap = {
   [ADD_COLUMN]: updateColumnList,
   [REMOVE_COLUMN]: removeItemFromColumnList,
-  [CHANGE_COLUMN_ORDER]: changeColumnOrder
+  [ADD_TASK_ID]: addTaskIdToColumn
 }
 
 const columnReducer = createReducer(strategyMap, initialState);

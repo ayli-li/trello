@@ -11,6 +11,7 @@ export const ColumnList = () => {
 
   const [title, setTitle] = useState('');
   const [isCreateColumn, setIsCreateColumn] = useState(false);
+  const [columnNumber, setColumnNumber] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -24,7 +25,8 @@ export const ColumnList = () => {
         taskIds: []
       }
 
-      dispatch(addColumn(column));
+      dispatch(addColumn(column, columnNumber));
+      setColumnNumber(prev => prev + 1);
       setIsCreateColumn(false);
       setTitle('');
     }

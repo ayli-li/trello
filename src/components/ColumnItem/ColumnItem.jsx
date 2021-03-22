@@ -6,7 +6,7 @@ import { CreateTaskForm } from '../CreateTaskForm/CreateTaskForm';
 import { CardTask } from '../CardTask/CardTask';
 import { TaskModal } from '../TaskModal/TaskModal';
 import { addTask, removeTask } from '../../store/task/action';
-import { addTaskIdToColumn } from '../../store/column/action';
+import { addTaskIdToColumn, removeTaskIdFromColumn } from '../../store/column/action';
 
 import './ColumnItem.css'
 
@@ -19,6 +19,7 @@ export const ColumnItem = ({ title,
   const [descriptionCard, setDescriptionCard] = useState('');
   const [isShowModal, setIsShowModal] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
+  const [taskNumber, setTaskNumber] = useState(0);
 
   const tasks = useSelector(state => state.tasks.tasks);
   const columnList = useSelector(state => state.columns.columnList);
@@ -33,7 +34,8 @@ export const ColumnItem = ({ title,
         descriptionCard: ''
       }
 
-      dispatch(addTask(task));
+      dispatch(addTask(task, taskNumber));
+      setTaskNumber(prev => prev + 1);
       dispatch(addTaskIdToColumn(task.id, columnId));
       setTitleCard('');
     }    
@@ -49,10 +51,18 @@ export const ColumnItem = ({ title,
 
   const handleResetAddingTask = () => setIsCreateTask(false);
 
-  const handleDeleteTask = (id) => dispatch(removeTask(id));
+  const handleDeleteTask = (id, columnId) => {
+    dispatch(removeTask(id));
+    dispatch(removeTaskIdFromColumn(id, columnId));
+  }
 
   const addCurrentTask = (idTask) => {
-    const task = tasks.find(task => task.id === idTask);
+    let task = {};
+    for (let key in tasks) {
+      if (tasks[key].id === idTask) {
+        task = tasks[key];
+      }
+    }
     
     if (task) {
       setCurrentTask(task);
@@ -67,14 +77,15 @@ export const ColumnItem = ({ title,
         <span className='close_symbol' onClick={() => deleteColumn(columnId) }>x</span>
       </div>   
 
-      {Object.keys(columnList).map(column => columnList[column].id === columnId ? 
-       tasks.map(({ id, titleCard }) => 
+      {Object.keys(tasks).length ?
+       Object.keys(tasks).map(task => 
         <CardTask 
-          id={id} 
-          value={titleCard} 
-          key={id} 
+          id={tasks[task].id} 
+          value={tasks[task].titleCard} 
+          columnId={columnId}
+          key={tasks[task].id} 
           deleteTask={handleDeleteTask} 
-          addCurrentTask={addCurrentTask} /> ) : false) }
+          addCurrentTask={addCurrentTask} /> ) : false }
 
       {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} />}       
 

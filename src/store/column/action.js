@@ -1,12 +1,14 @@
 import {
   ADD_COLUMN,
   REMOVE_COLUMN,
-  ADD_TASK_ID
+  ADD_TASK_ID,
+  REMOVE_TASK_ID
 } from './constants';
 
-export const addColumn = (column) => ({
+export const addColumn = (column, columnNumber) => ({
   type: ADD_COLUMN,
-  column
+  column,
+  columnNumber
 })
 
 export const removeColumn = (id) => ({
@@ -16,6 +18,12 @@ export const removeColumn = (id) => ({
 
 export const addTaskIdToColumn = (taskId, columnId) => ({
   type: ADD_TASK_ID,
+  taskId,
+  columnId
+})
+
+export const removeTaskIdFromColumn = (taskId, columnId) => ({
+  type: REMOVE_TASK_ID,
   taskId,
   columnId
 })

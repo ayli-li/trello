@@ -34,31 +34,51 @@ import {
 //   ]
 
 const initialState = {
-  tasks: []
+  tasks: {}
 }
 
-const addTaskToColumn = (state, { task }) => ({
+const addTaskToColumn = (state, { task, taskNumber }) => ({
   ...state,
-  tasks: [...state.tasks, task]
+  tasks: {...state.tasks, [taskNumber]: task}
 })
 
-const removeTaskFromColumn = (state, { id }) => ({
-  ...state,
-  tasks: state.tasks.filter(task => task.id !== id)
-})
+const removeTaskFromColumn = (state, { id }) => {
+  for (let key in state.tasks) {  
 
-const addTaskDescription = (state, { descriptionCard, id }) => ({
-  ...state,
-  tasks: state.tasks.map(task => {
-    if (task.id === id) {
-      return ({
-        ...task,
-        descriptionCard 
-      })
-    }
-    return task;
-  })
-})
+    if (state.tasks[key].id === id) {
+      delete state.tasks[key];
+    } 
+  }
+
+  return {
+    ...state,
+    tasks: {...state.tasks}
+  }
+}
+
+const addTaskDescription = (state, { descriptionCard, id }) => {
+  for (let key in state.tasks) {  
+
+    if (state.tasks[key].id === id) {
+      state.tasks[key].descriptionCard = descriptionCard;
+    } 
+  }
+
+  return {
+    ...state,
+    tasks: {...state.tasks}
+  }
+  // ...state,
+  // tasks: state.tasks.map(task => {
+  //   if (task.id === id) {
+  //     return ({
+  //       ...task,
+  //       descriptionCard 
+  //     })
+  //   }
+  //   return task;
+  // })
+}
 
 const strategyMap = {
   [ADD_TASK]: addTaskToColumn,

@@ -10,9 +10,7 @@ import { addTaskIdToColumn, removeTaskIdFromColumn } from '../../store/column/ac
 
 import './ColumnItem.css'
 
-export const ColumnItem = ({ title, 
-                             deleteColumn, 
-                             columnId }) => {
+export const ColumnItem = ({ title, deleteColumn, columnId }) => {
 
   const [isCreateTask, setIsCreateTask] = useState(false);
   const [titleCard, setTitleCard] = useState('');
@@ -22,7 +20,7 @@ export const ColumnItem = ({ title,
   const [taskNumber, setTaskNumber] = useState(0);
 
   const tasks = useSelector(state => state.tasks.tasks);
-  const columnList = useSelector(state => state.columns.columnList);
+  //const columnList = useSelector(state => state.columns.columnList);
 
   const dispatch = useDispatch();
 

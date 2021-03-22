@@ -23,9 +23,9 @@ const initialState = {
   columnList: {},
 }
 
-const updateColumnList = (state, { column, columnNumber }) => ({
+const updateColumnList = (state, { column, id }) => ({
   ...state,
-  columnList: {...state.columnList, [columnNumber]: column}  
+  columnList: {...state.columnList, [id]: column}  
 })
 
 const removeItemFromColumnList = (state, { id }) => {
@@ -43,16 +43,26 @@ const removeItemFromColumnList = (state, { id }) => {
 }
 
 const addTaskIdToColumn = (state, { taskId, columnId }) => {
-  for (let key in state.columnList) {
 
-    if (state.columnList[key].id === columnId) {
-      state.columnList[key].taskIds.push(taskId);
-    }
-  }
+  // for (let key in state.columnList) {
+
+  //   if (state.columnList[key].id === columnId) {
+  //     state.columnList[key].taskIds.push(taskId);
+  //   }
+  // }
+
+  console.log('columnId', columnId)
+  console.log('taskId', taskId)
 
   return {
     ...state,
-    columnList: {...state.columnList}
+    columnList: {
+      ...state.columnList,
+      [columnId]: {
+        ...state.columnList[columnId],
+        taskIds: [...state.columnList[columnId].taskIds, taskId]
+      }
+    } 
   }
 }
 

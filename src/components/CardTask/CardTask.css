@@ -6,3 +6,7 @@
   color: #fffffa;
   background-color: lightgray;
 }
+
+.card_value {
+  min-width: 235px;
+}

@@ -37,18 +37,13 @@ const initialState = {
   tasks: {}
 }
 
-const addTaskToColumn = (state, { task, taskNumber }) => ({
+const addTaskToColumn = (state, { task }) => ({
   ...state,
-  tasks: {...state.tasks, [taskNumber]: task}
+  tasks: {...state.tasks, [task.id]: task}
 })
 
 const removeTaskFromColumn = (state, { id }) => {
-  for (let key in state.tasks) {  
-
-    if (state.tasks[key].id === id) {
-      delete state.tasks[key];
-    } 
-  }
+  delete state.tasks[id];
 
   return {
     ...state,
@@ -56,29 +51,16 @@ const removeTaskFromColumn = (state, { id }) => {
   }
 }
 
-const addTaskDescription = (state, { descriptionCard, id }) => {
-  for (let key in state.tasks) {  
-
-    if (state.tasks[key].id === id) {
-      state.tasks[key].descriptionCard = descriptionCard;
-    } 
+const addTaskDescription = (state, { descriptionCard, id }) => ({
+  ...state,
+  tasks: {
+    ...state.tasks,
+    [id]: {
+      ...state.tasks[id],
+      descriptionCard
+    }
   }
-
-  return {
-    ...state,
-    tasks: {...state.tasks}
-  }
-  // ...state,
-  // tasks: state.tasks.map(task => {
-  //   if (task.id === id) {
-  //     return ({
-  //       ...task,
-  //       descriptionCard 
-  //     })
-  //   }
-  //   return task;
-  // })
-}
+})
 
 const strategyMap = {
   [ADD_TASK]: addTaskToColumn,

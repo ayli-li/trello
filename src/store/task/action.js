@@ -4,10 +4,9 @@ import {
   ADD_DESCRIPTION
 } from './constants';
 
-export const addTask = (task, taskNumber) => ({
+export const addTask = (task) => ({
   type: ADD_TASK,
-  task,
-  taskNumber
+  task
 });
 
 export const removeTask = (id) => ({

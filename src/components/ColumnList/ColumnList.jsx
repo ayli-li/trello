@@ -24,7 +24,7 @@ export const ColumnList = () => {
         taskIds: []
       }
 
-      dispatch(addColumn(column, column.id));
+      dispatch(addColumn(column));
       setIsCreateColumn(false);
       setTitle('');
     }

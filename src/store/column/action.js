@@ -5,10 +5,9 @@ import {
   REMOVE_TASK_ID
 } from './constants';
 
-export const addColumn = (column, id) => ({
+export const addColumn = (column) => ({
   type: ADD_COLUMN,
-  column,
-  id
+  column
 })
 
 export const removeColumn = (id) => ({

@@ -17,10 +17,17 @@ export const ColumnItem = ({ title, deleteColumn, columnId }) => {
   const [descriptionCard, setDescriptionCard] = useState('');
   const [isShowModal, setIsShowModal] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
-  const [taskNumber, setTaskNumber] = useState(0);
 
-  const tasks = useSelector(state => state.tasks.tasks);
   //const columnList = useSelector(state => state.columns.columnList);
+  const tasks = useSelector(state => state.tasks.tasks);
+  
+  let filteredTasks = {};
+  Object.keys(tasks).map(task => {
+    if (tasks[task].columnId === columnId) {
+      filteredTasks[task] = tasks[task];
+    }
+    return false;
+  });
 
   const dispatch = useDispatch();
 
@@ -29,11 +36,11 @@ export const ColumnItem = ({ title, deleteColumn, columnId }) => {
       const task = {
         id: nanoid(),
         titleCard,
-        descriptionCard: ''
+        descriptionCard: '',
+        columnId
       }
 
-      dispatch(addTask(task, taskNumber));
-      setTaskNumber(prev => prev + 1);
+      dispatch(addTask(task));
       dispatch(addTaskIdToColumn(task.id, columnId));
       setTitleCard('');
     }    
@@ -56,16 +63,16 @@ export const ColumnItem = ({ title, deleteColumn, columnId }) => {
 
   const addCurrentTask = (idTask) => {
     let task = {};
-    for (let key in tasks) {
-      if (tasks[key].id === idTask) {
-        task = tasks[key];
+
+    Object.keys(tasks).map(item => {
+      if (tasks[item].id === idTask) {
+        task = tasks[item];
       }
-    }
+      return false;
+    });
     
-    if (task) {
-      setCurrentTask(task);
-      setIsShowModal(true);
-    }
+    setCurrentTask(task);
+    setIsShowModal(true);
   }
 
   return <>
@@ -75,13 +82,13 @@ export const ColumnItem = ({ title, deleteColumn, columnId }) => {
         <span className='close_symbol' onClick={() => deleteColumn(columnId) }>x</span>
       </div>   
 
-      {Object.keys(tasks).length ?
-       Object.keys(tasks).map(task => 
+      {Object.keys(filteredTasks).length ?
+       Object.keys(filteredTasks).map(task => 
         <CardTask 
-          id={task.id} 
-          value={task.titleCard} 
+          id={filteredTasks[task].id} 
+          value={filteredTasks[task].titleCard} 
           columnId={columnId}
-          key={task.id} 
+          key={filteredTasks[task].id} 
           deleteTask={handleDeleteTask} 
           addCurrentTask={addCurrentTask} /> ) : false }
 

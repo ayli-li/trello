@@ -23,18 +23,13 @@ const initialState = {
   columnList: {},
 }
 
-const updateColumnList = (state, { column, id }) => ({
+const updateColumnList = (state, { column }) => ({
   ...state,
-  columnList: {...state.columnList, [id]: column}  
+  columnList: {...state.columnList, [column.id]: column}  
 })
 
 const removeItemFromColumnList = (state, { id }) => {
-  for (let key in state.columnList) {  
-
-    if (state.columnList[key].id === id) {
-      delete state.columnList[key];
-    } 
-  }
+  delete state.columnList[id];
 
   return {
     ...state,
@@ -42,44 +37,27 @@ const removeItemFromColumnList = (state, { id }) => {
   }
 }
 
-const addTaskIdToColumn = (state, { taskId, columnId }) => {
+const addTaskIdToColumn = (state, { taskId, columnId }) => ({
+  ...state,
+  columnList: {
+    ...state.columnList,
+    [columnId]: {
+      ...state.columnList[columnId],
+      taskIds: [...state.columnList[columnId].taskIds, taskId]
+    }
+  } 
+})
 
-  // for (let key in state.columnList) {
-
-  //   if (state.columnList[key].id === columnId) {
-  //     state.columnList[key].taskIds.push(taskId);
-  //   }
-  // }
-
-  console.log('columnId', columnId)
-  console.log('taskId', taskId)
-
-  return {
-    ...state,
-    columnList: {
-      ...state.columnList,
-      [columnId]: {
-        ...state.columnList[columnId],
-        taskIds: [...state.columnList[columnId].taskIds, taskId]
-      }
-    } 
-  }
-}
-
-const removeTaskIdFromColumn = (state, { taskId, columnId }) => {
-  for (let key in state.columnList) {
-
-    if (state.columnList[key].id === columnId) {
-      const index = state.columnList[key].taskIds.indexOf(taskId);
-      state.columnList[key].taskIds.splice(index, 1);
+const removeTaskIdFromColumn = (state, { taskId, columnId }) => ({
+  ...state,
+  columnList: {
+    ...state.columnList,
+    [columnId]: {
+      ...state.columnList[columnId],
+      taskIds: [...state.columnList[columnId].taskIds.filter(id => id !== taskId)]
     }
   }
-
-  return {
-    ...state,
-    columnList: {...state.columnList}
-  }
-}
+})
 
 
 const strategyMap = {

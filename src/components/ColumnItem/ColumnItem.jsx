@@ -78,10 +78,10 @@ export const ColumnItem = ({ title, deleteColumn, columnId }) => {
       {Object.keys(tasks).length ?
        Object.keys(tasks).map(task => 
         <CardTask 
-          id={tasks[task].id} 
-          value={tasks[task].titleCard} 
+          id={task.id} 
+          value={task.titleCard} 
           columnId={columnId}
-          key={tasks[task].id} 
+          key={task.id} 
           deleteTask={handleDeleteTask} 
           addCurrentTask={addCurrentTask} /> ) : false }
 

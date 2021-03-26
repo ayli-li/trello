@@ -71,8 +71,10 @@ export const ColumnItem = ({ title, deleteColumn, columnId }) => {
       return false;
     });
     
-    setCurrentTask(task);
-    setIsShowModal(true);
+    if (Object.keys(task).length) {
+      setCurrentTask(task);
+      setIsShowModal(true);
+    }    
   }
 
   return <>

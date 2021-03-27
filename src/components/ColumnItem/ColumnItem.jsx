@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import { CreateTaskForm } from '../CreateTaskForm/CreateTaskForm';
 import { CardTask } from '../CardTask/CardTask';
@@ -77,22 +78,46 @@ export const ColumnItem = ({ title, deleteColumn, columnId }) => {
     }    
   }
 
+  //const [characters, updateCharacters] = useState(finalSpaceCharacters);
+
+  // const handleOnDragEnd = (result) => {
+  //   if (!result.destination) return;
+
+  //   const items = Array.from(characters);
+  //   const [reorderedItem] = items.splice(result.source.index, 1);
+  //   items.splice(result.destination.index, 0, reorderedItem);
+
+  //   updateCharacters(items);
+  // }
+
   return <>
     <div className='column' id={columnId}>
       <div className='column_items'>
         <span className='column_title'>{title}</span>
         <span className='close_symbol' onClick={() => deleteColumn(columnId) }>x</span>
-      </div>   
+      </div> 
 
-      {Object.keys(filteredTasks).length ?
-       Object.keys(filteredTasks).map(task => 
-        <CardTask 
-          id={filteredTasks[task].id} 
-          value={filteredTasks[task].titleCard} 
-          columnId={columnId}
-          key={filteredTasks[task].id} 
-          deleteTask={handleDeleteTask} 
-          addCurrentTask={addCurrentTask} /> ) : false }
+      <DragDropContext onDragEnd>
+        <Droppable droppableId="tasks">
+          {(provided) => (
+            <ul className="tasks" {...provided.droppableProps} ref={provided.innerRef}>  
+
+              {Object.keys(filteredTasks).length ?
+              Object.keys(filteredTasks).map((task, index) => 
+                <CardTask 
+                  id={filteredTasks[task].id} 
+                  value={filteredTasks[task].titleCard} 
+                  columnId={columnId}
+                  key={filteredTasks[task].id} 
+                  deleteTask={handleDeleteTask} 
+                  addCurrentTask={addCurrentTask}
+                  index={index} /> ) : false }
+
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
 
       {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} />}       
 

@@ -1,5 +1,6 @@
 .card_task {
   cursor: pointer;
+  padding: 5px;
 }
 
 .card_task:hover {
@@ -8,5 +9,5 @@
 }
 
 .card_value {
-  min-width: 235px;
+  min-width: 190px;
 }

@@ -1,10 +1,11 @@
-import createReducer from "../../utils/createReducer"
+import createReducer from "../../utils/createReducer";
 import {
   ADD_COLUMN,
   REMOVE_COLUMN,
   ADD_TASK_ID,
-  REMOVE_TASK_ID
-} from "./constants"
+  REMOVE_TASK_ID,
+  SWITCH_TASKS_ORDER
+} from "./constants";
 
 // const mockInitialState = [
 //   {
@@ -21,12 +22,12 @@ import {
 
 const initialState = {
   columnList: {},
-}
+};
 
 const updateColumnList = (state, { column }) => ({
   ...state,
   columnList: {...state.columnList, [column.id]: column}  
-})
+});
 
 const removeItemFromColumnList = (state, { id }) => {
   delete state.columnList[id];
@@ -35,7 +36,7 @@ const removeItemFromColumnList = (state, { id }) => {
     ...state,
     columnList: {...state.columnList}
   }
-}
+};
 
 const addTaskIdToColumn = (state, { taskId, columnId }) => ({
   ...state,
@@ -46,7 +47,7 @@ const addTaskIdToColumn = (state, { taskId, columnId }) => ({
       taskIds: [...state.columnList[columnId].taskIds, taskId]
     }
   } 
-})
+});
 
 const removeTaskIdFromColumn = (state, { taskId, columnId }) => ({
   ...state,
@@ -57,15 +58,24 @@ const removeTaskIdFromColumn = (state, { taskId, columnId }) => ({
       taskIds: [...state.columnList[columnId].taskIds.filter(id => id !== taskId)]
     }
   }
-})
+});
+
+const switchTasksOrder = (state, { newColumn }) => ({
+  ...state,
+  columnList: {
+    ...state.columnList,
+    [newColumn.id]: newColumn,
+  }
+});
 
 
 const strategyMap = {
   [ADD_COLUMN]: updateColumnList,
   [REMOVE_COLUMN]: removeItemFromColumnList,
   [ADD_TASK_ID]: addTaskIdToColumn,
-  [REMOVE_TASK_ID]: removeTaskIdFromColumn
-}
+  [REMOVE_TASK_ID]: removeTaskIdFromColumn,
+  [SWITCH_TASKS_ORDER]: switchTasksOrder
+};
 
 const columnReducer = createReducer(strategyMap, initialState);
 

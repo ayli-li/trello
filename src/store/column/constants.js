@@ -3,3 +3,5 @@ export const REMOVE_COLUMN = 'REMOVE_COLUMN';
 
 export const ADD_TASK_ID = 'ADD_TASK_ID';
 export const REMOVE_TASK_ID = 'REMOVE_TASK_ID';
+
+export const SWITCH_TASKS_ORDER = 'SWITCH_TASKS_ORDER';

@@ -7,7 +7,7 @@ import { CreateTaskForm } from '../CreateTaskForm/CreateTaskForm';
 import { CardTask } from '../CardTask/CardTask';
 import { TaskModal } from '../TaskModal/TaskModal';
 import { addTask, removeTask } from '../../store/task/action';
-import { addTaskIdToColumn, removeTaskIdFromColumn } from '../../store/column/action';
+import { addTaskIdToColumn, removeTaskIdFromColumn, switchTasksOrder } from '../../store/column/action';
 
 import './ColumnItem.css'
 
@@ -19,16 +19,18 @@ export const ColumnItem = ({ title, deleteColumn, columnId }) => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
 
-  //const columnList = useSelector(state => state.columns.columnList);
+  const columnList = useSelector(state => state.columns.columnList);
   const tasks = useSelector(state => state.tasks.tasks);
   
-  let filteredTasks = {};
-  Object.keys(tasks).map(task => {
-    if (tasks[task].columnId === columnId) {
-      filteredTasks[task] = tasks[task];
-    }
-    return false;
-  });
+  // let filteredTasks = {};
+  // Object.keys(tasks).map(task => {
+  //   if (tasks[task].columnId === columnId) {
+  //     filteredTasks[task] = tasks[task];
+  //   }
+  //   return false;
+  // });
+
+  const filteredTasks = columnList[columnId].taskIds.map(taskId => tasks[taskId]);
 
   const dispatch = useDispatch();
 
@@ -90,6 +92,32 @@ export const ColumnItem = ({ title, deleteColumn, columnId }) => {
   //   updateCharacters(items);
   // }
 
+  const handleOnDragEnd = result => {
+    console.log(result);
+
+    const { destination, source, draggableId } = result;
+    
+    if (!destination) return;
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) return;
+
+    const column = columnList[source.droppableId];
+    const newTaskIds = [...column.taskIds];
+    
+    newTaskIds.splice(source.index, 1);
+    newTaskIds.splice(destination.index, 0, draggableId);
+
+    const newColumn = {
+      ...column,
+      taskIds: newTaskIds,
+    };
+
+    dispatch(switchTasksOrder(newColumn));
+  }
+
   return <>
     <div className='column' id={columnId}>
       <div className='column_items'>
@@ -97,10 +125,10 @@ export const ColumnItem = ({ title, deleteColumn, columnId }) => {
         <span className='close_symbol' onClick={() => deleteColumn(columnId) }>x</span>
       </div> 
 
-      <DragDropContext onDragEnd>
-        <Droppable droppableId="tasks">
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Droppable droppableId={columnId}>
           {(provided) => (
-            <ul className="tasks" {...provided.droppableProps} ref={provided.innerRef}>  
+            <ul className={columnId} {...provided.droppableProps} ref={provided.innerRef}>  
 
               {Object.keys(filteredTasks).length ?
               Object.keys(filteredTasks).map((task, index) => 

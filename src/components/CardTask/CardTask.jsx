@@ -6,9 +6,8 @@ import './CardTask.css'
 export const CardTask = ({ id, value, columnId, deleteTask, addCurrentTask, index }) => { 
 
   return <Draggable key={id} draggableId={id} index={index}>
-           {(provided, snapshot) => (
+           {provided => (
              <li ref={provided.innerRef} 
-                 isDragging={snapshot.isDragging}
                  {...provided.draggableProps} 
                  {...provided.dragHandleProps}
                  className='column_items card_task' 

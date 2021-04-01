@@ -35,12 +35,12 @@ import {
 
 const initialState = {
   tasks: {}
-}
+};
 
 const addTaskToColumn = (state, { task }) => ({
   ...state,
   tasks: {...state.tasks, [task.id]: task}
-})
+});
 
 const removeTaskFromColumn = (state, { id }) => {
   delete state.tasks[id];
@@ -49,7 +49,7 @@ const removeTaskFromColumn = (state, { id }) => {
     ...state,
     tasks: {...state.tasks}
   }
-}
+};
 
 const addTaskDescription = (state, { descriptionCard, id }) => ({
   ...state,
@@ -60,13 +60,13 @@ const addTaskDescription = (state, { descriptionCard, id }) => ({
       descriptionCard
     }
   }
-})
+});
 
 const strategyMap = {
   [ADD_TASK]: addTaskToColumn,
   [REMOVE_TASK]: removeTaskFromColumn,
   [ADD_DESCRIPTION]: addTaskDescription,
-}
+};
 
 const tasksReducer = createReducer(strategyMap, initialState);
 

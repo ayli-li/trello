@@ -69,7 +69,7 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
 
   return <>
     <Draggable draggableId={columnId} index={index}>
-      {(provided) => (
+      {provided => (
         <div className='column'
              id={columnId}
              {...provided.draggableProps}
@@ -81,12 +81,11 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
           </div>
           
           <Droppable droppableId={columnId}
-                      type='task'>
-            {(provided, snapshot) => (
+                     type='task'>
+            {provided => (
               <ul className={columnId} 
                   {...provided.droppableProps} 
-                  ref={provided.innerRef}
-                  isDraggingOver={snapshot.isDraggingOver} >  
+                  ref={provided.innerRef} >  
 
                 {Object.keys(columnTasks).length ?
                 Object.keys(columnTasks).map((task, index) => 

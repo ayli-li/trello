@@ -7,8 +7,9 @@ import './ColumnList.css';
 import { CreateColumnForm } from '../CreateColumnForm/CreateColumnForm';
 import { ColumnItem } from '../ColumnItem/ColumnItem';
 
-import { addColumn, removeColumn } from '../../store/column/action';
-import { switchTasksOrderInTheSameColumn, switchTasksOrderInTheDifferentColumns } from '../../store/column/action';
+import { addColumn, removeColumn, removeTaskIdFromColumn, switchTasksOrderInTheSameColumn, switchTasksOrderInTheDifferentColumns } from '../../store/column/action';
+import { removeTask } from '../../store/task/action';
+import { addColumnOrder, removeColumnOrder, switchColumnOrder } from '../../store/columnOrder/action';
 
 export const ColumnList = () => {
 
@@ -19,6 +20,7 @@ export const ColumnList = () => {
 
   const columnList = useSelector(state => state.columns.columnList);
   const tasks = useSelector(state => state.tasks.tasks);
+  const columnOrder = useSelector(state => state.columnOrder.columnOrder);
 
   const handleAddColumn = () => {
     if (title) {
@@ -29,6 +31,7 @@ export const ColumnList = () => {
       }
 
       dispatch(addColumn(column));
+      dispatch(addColumnOrder(column.id));
       setIsCreateColumn(false);
       setTitle('');
     }
@@ -36,7 +39,11 @@ export const ColumnList = () => {
 
   const handleResetAddingColumn = () => setIsCreateColumn(false);
 
-  const handleDeleteColumnItem = (id) => dispatch(removeColumn(id));
+  const handleDeleteColumnItem = (id) => {
+    columnList[id].taskIds.map(taskId => dispatch(removeTask(taskId)) && dispatch(removeTaskIdFromColumn(taskId, id)));
+    dispatch(removeColumn(id));
+    dispatch(removeColumnOrder(id));
+  }
 
   const handleOnDragEnd = (result) => {
 
@@ -49,20 +56,17 @@ export const ColumnList = () => {
       destination.index === source.index
     ) return;
 
-    const startColumn = columnList[source.droppableId];
-    const finishColumn = columnList[destination.droppableId];
-
     if (type === 'column') {
-      console.log(draggableId)
+      const newColumnOrder = [...columnOrder];
+      newColumnOrder.splice(source.index, 1);
+      newColumnOrder.splice(destination.index, 0, draggableId);
+
+      dispatch(switchColumnOrder(newColumnOrder));
+      return;
     }
 
-
-    //   // Object.keys(columnTasks).map(item => {
-    //   //   if (columnTasks[item].id === idTask) {
-    //   //     task = columnTasks[item];
-    //   //   }
-    //   //   return false;
-    //   // });
+    const startColumn = columnList[source.droppableId];
+    const finishColumn = columnList[destination.droppableId];
 
     if (startColumn === finishColumn) {
       const newTaskIds = [...startColumn.taskIds];
@@ -76,52 +80,55 @@ export const ColumnList = () => {
       };
 
       dispatch(switchTasksOrderInTheSameColumn(newColumn));
-    } else {
-      const startColumnTaskIds = [...startColumn.taskIds];
-    
-      startColumnTaskIds.splice(source.index, 1);
+      return;
+    }
 
-      const newStartColumn = {
-        ...startColumn,
-        taskIds: startColumnTaskIds,
-      };
+    const startColumnTaskIds = [...startColumn.taskIds];
+  
+    startColumnTaskIds.splice(source.index, 1);
 
-      const finishColumnTaskIds = [...finishColumn.taskIds];
-      finishColumnTaskIds.splice(destination.index, 0, draggableId);
+    const newStartColumn = {
+      ...startColumn,
+      taskIds: startColumnTaskIds,
+    };
 
-      const newFinishColumn = {
-        ...finishColumn,
-        taskIds: finishColumnTaskIds
-      };
+    const finishColumnTaskIds = [...finishColumn.taskIds];
+    finishColumnTaskIds.splice(destination.index, 0, draggableId);
 
-      dispatch(switchTasksOrderInTheDifferentColumns(newStartColumn, newFinishColumn))
-    }       
+    const newFinishColumn = {
+      ...finishColumn,
+      taskIds: finishColumnTaskIds
+    };
+
+    dispatch(switchTasksOrderInTheDifferentColumns(newStartColumn, newFinishColumn));      
   }
 
   return <>
     <DragDropContext onDragEnd={handleOnDragEnd}>
-      <Droppable droppableId={'all-columns'} direction='horizontal' type='column'>
-        {(provided) => (
-          <div className='columns'
-               {...provided.droppableProps}
-               ref={provided.innerRef} >
-            <ul className='ul_columns'>
+      <Droppable droppableId='all-columns' direction='horizontal' type='column'> 
+      {provided => (
+        <div className='columns'
+            {...provided.droppableProps}
+            ref={provided.innerRef}>
+          
+          <ul className='ul_columns'>
 
-              {Object.keys(columnList).length ?
-              Object.keys(columnList).map((column, index) => {
-                const columnTasks = columnList[column].taskIds.map(taskId => tasks[taskId] );
-                
-                return <li key={columnList[column].id} className='li_column'>
+            {columnOrder.length ?
+            columnOrder.map((columnId, index) => {
+              const column = columnList[columnId];
+              const columnTasks = column.taskIds.map(taskId => tasks[taskId] );
+              
+              return <li key={column.id} className='li_column'>
 
-                  <ColumnItem title={columnList[column].title} 
-                              deleteColumn={handleDeleteColumnItem} 
-                              columnId={columnList[column].id}
-                              columnTasks={columnTasks}
-                              index={index} />
-                </li>
-              } ) : false }       
-
-            </ul>
+                <ColumnItem title={column.title} 
+                            deleteColumn={handleDeleteColumnItem} 
+                            columnId={column.id}
+                            columnTasks={columnTasks}
+                            index={index} />
+              </li>
+            } ) : false }       
+            {provided.placeholder}
+          </ul>
 
           {isCreateColumn && <CreateColumnForm value={title} setValue={setTitle} addColumn={handleAddColumn} 
           resetAddingColumn={handleResetAddingColumn} /> }
@@ -129,9 +136,9 @@ export const ColumnList = () => {
           {!isCreateColumn && <button onClick={() => setIsCreateColumn(true)} className='column_btn'>
             Add column +
           </button>}
-          {provided.placeholder}
-        </div>        
-        )}
+            
+        </div>
+      )}
       </Droppable>
     </DragDropContext>
   </>

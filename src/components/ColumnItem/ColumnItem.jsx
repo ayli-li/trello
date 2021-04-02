@@ -68,48 +68,49 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
   }  
 
   return <>
-    <Draggable draggableId={columnId} index={index}>
+    <Draggable key={columnId} draggableId={columnId} index={index}>
       {provided => (
-        <div className='column'
-             id={columnId}
-             {...provided.draggableProps}
-             ref={provided.innerRef} >
-          <div className='column_items'
-               {...provided.dragHandleProps} >
-            <span className='column_title'>{title}</span>
-            <span className='close_symbol' onClick={() => deleteColumn(columnId) }>x</span>
-          </div>
-          
-          <Droppable droppableId={columnId}
-                     type='task'>
-            {provided => (
-              <ul className={columnId} 
-                  {...provided.droppableProps} 
-                  ref={provided.innerRef} >  
+        <li className='li_column'
+            {...provided.draggableProps}
+            ref={provided.innerRef}>
+          <div className='column' id={columnId}>
+            <div className='column_items'>
+              <span className='column_title'
+                     {...provided.dragHandleProps}>{title}</span>
+              <span className='close_symbol' onClick={() => deleteColumn(columnId) }>x</span>
+            </div>
+            
+            <Droppable droppableId={columnId}
+                      type='task'>
+              {provided => (
+                <ul className={columnId} 
+                    {...provided.droppableProps} 
+                    ref={provided.innerRef} >  
 
-                {Object.keys(columnTasks).length ?
-                Object.keys(columnTasks).map((task, index) => 
-                  <CardTask 
-                    id={columnTasks[task].id} 
-                    value={columnTasks[task].titleCard} 
-                    columnId={columnId}
-                    key={columnTasks[task].id} 
-                    deleteTask={handleDeleteTask} 
-                    addCurrentTask={addCurrentTask}
-                    index={index} /> ) : false }
+                  {Object.keys(columnTasks).length ?
+                  Object.keys(columnTasks).map((task, index) => 
+                    <CardTask 
+                      id={columnTasks[task].id} 
+                      value={columnTasks[task].titleCard} 
+                      columnId={columnId}
+                      key={columnTasks[task].id} 
+                      deleteTask={handleDeleteTask} 
+                      addCurrentTask={addCurrentTask}
+                      index={index} /> ) : false }
 
-                {provided.placeholder}
-              </ul>
-            )}
-          </Droppable>
+                  {provided.placeholder}
+                </ul>
+              )}
+            </Droppable>
 
-          {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} />}       
+            {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} />}       
 
-          <button className='column_btn column_item-btn' onClick={handleAddTask}>Add task</button>   
+            <button className='column_btn column_item-btn' onClick={handleAddTask}>Add task</button>   
 
-          {isShowModal && <TaskModal value={descriptionCard} taskInfo={currentTask} setDescription={setDescriptionCard} showModal={setIsShowModal} /> }
-        </div>        
-      )}      
+            {isShowModal && <TaskModal value={descriptionCard} taskInfo={currentTask} setDescription={setDescriptionCard} showModal={setIsShowModal} /> }
+          </div>  
+        </li>      
+      )}            
     </Draggable>
   </>
 }

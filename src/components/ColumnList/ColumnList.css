@@ -4,7 +4,6 @@
   align-items: center;
   padding-left: 5px;
   padding-top: 5px;
-  position: relative;
 }
 
 .ul_columns {
@@ -63,4 +62,8 @@ input[type="text"] {
 .column_btn:hover {
   color: #fffffa;
   background-color: lightgray;
+}
+
+.all-columns {
+  display: flex;
 }

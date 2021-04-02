@@ -105,41 +105,37 @@ export const ColumnList = () => {
 
   return <>
     <DragDropContext onDragEnd={handleOnDragEnd}>
-      <Droppable droppableId='all-columns' direction='horizontal' type='column'> 
-      {provided => (
-        <div className='columns'
-            {...provided.droppableProps}
-            ref={provided.innerRef}>
-          
-          <ul className='ul_columns'>
+      <div className='columns'>
+
+        <Droppable droppableId='all-columns' direction='horizontal' type='column'> 
+        {provided => (    
+          <ul className='ul_columns'
+              {...provided.droppableProps}
+              ref={provided.innerRef}>
 
             {columnOrder.length ?
             columnOrder.map((columnId, index) => {
               const column = columnList[columnId];
               const columnTasks = column.taskIds.map(taskId => tasks[taskId] );
               
-              return <li key={column.id} className='li_column'>
-
-                <ColumnItem title={column.title} 
-                            deleteColumn={handleDeleteColumnItem} 
+              return <ColumnItem title={column.title} 
+                                 deleteColumn={handleDeleteColumnItem} 
                             columnId={column.id}
                             columnTasks={columnTasks}
-                            index={index} />
-              </li>
-            } ) : false }       
+                            index={index} /> }) : false }                    
             {provided.placeholder}
           </ul>
+        )}
+        </Droppable>
 
-          {isCreateColumn && <CreateColumnForm value={title} setValue={setTitle} addColumn={handleAddColumn} 
-          resetAddingColumn={handleResetAddingColumn} /> }
+        {isCreateColumn && <CreateColumnForm value={title} setValue={setTitle} addColumn={handleAddColumn} 
+        resetAddingColumn={handleResetAddingColumn} /> }
+      
+        {!isCreateColumn && <button onClick={() => setIsCreateColumn(true)} className='column_btn'>
+          Add column +
+        </button>}
         
-          {!isCreateColumn && <button onClick={() => setIsCreateColumn(true)} className='column_btn'>
-            Add column +
-          </button>}
-            
-        </div>
-      )}
-      </Droppable>
+      </div>
     </DragDropContext>
   </>
 }

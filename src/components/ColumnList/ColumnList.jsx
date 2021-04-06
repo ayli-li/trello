@@ -31,7 +31,7 @@ const UlColumns = styled.ul`
 
 export const Btn = styled.button`
   background-color: #ebecf0;
-  margin-top: 15px;
+  margin-top: 10px;
   min-width: 115px;
   border: 0.5px solid gray;
   color: #172b4d;

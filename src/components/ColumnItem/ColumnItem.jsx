@@ -28,16 +28,22 @@ export const LiColumn = styled.li`
   justify-content: space-between;
 `;
 
-const ColumnTitle = styled.div`
+const ColumnTitleItems = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+  margin-bottom: 10px;
+  min-width: 185px;
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-right: 5px;
+`;
+
+const ColumnTitle = styled.span`
+  text-align: center;
   color: #172b4d;
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 10px;
-  min-width: 185px;
-  padding: 5px;
 `;
 
 export const CloseSign = styled.span`
@@ -130,10 +136,10 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
         <LiColumn {...provided.draggableProps}
                   ref={provided.innerRef}>
           <ColumnItems>
-            <ColumnTitle {...provided.dragHandleProps}>
-              {title}
+            <ColumnTitleItems {...provided.dragHandleProps}>
+              <ColumnTitle>{title}</ColumnTitle>
               <CloseSign onClick={() => deleteColumn(columnId) }>x</CloseSign>
-            </ColumnTitle>
+            </ColumnTitleItems>
 
             <Droppable droppableId={columnId} type='task'>
               {provided => (

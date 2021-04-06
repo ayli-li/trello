@@ -2,14 +2,71 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 
 import { CreateTaskForm } from '../CreateTaskForm/CreateTaskForm';
 import { CardTask } from '../CardTask/CardTask';
 import { TaskModal } from '../TaskModal/TaskModal';
+//import { Btn } from '../ColumnList/ColumnList';
+
 import { addTask, removeTask } from '../../store/task/action';
 import { addTaskIdToColumn, removeTaskIdFromColumn } from '../../store/column/action';
 
-import './ColumnItem.css'
+import './ColumnItem.css';
+
+export const LiColumn = styled.li`
+  min-width: 200px;
+  box-sizing: border-box;
+  height: min-content;
+  margin-right: 50px;
+  border: 0.5px solid gray;
+  border-radius: 1.5px;
+  list-style: none;
+  background-color: #ebecf0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+`;
+
+const ColumnTitle = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  color: #172b4d;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  min-width: 185px;
+  padding: 5px;
+`;
+
+export const CloseSign = styled.span`
+  cursor: pointer;
+  margin-right: 3px;
+`;
+
+export const ColumnItems = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  color: #172b4d;
+  font-size: 16px;
+`;
+
+const TaskBtn = styled.button`
+  background-color: #ebecf0;
+  border: 0.5px solid gray;
+  color: #172b4d;
+  border-radius: 1.5px;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  :hover {
+    color: #fffffa;
+    background-color: lightgray;
+  }
+`;
 
 export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }) => {
 
@@ -28,12 +85,12 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
         titleCard,
         descriptionCard: '',
         columnId
-      }
+      };
 
       dispatch(addTask(task));
       dispatch(addTaskIdToColumn(task.id, columnId));
-      setTitleCard('');
-    }    
+      setTitleCard('');      
+    }; 
   }
 
   const handleAddTask = () => {
@@ -70,46 +127,43 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
   return <>
     <Draggable key={columnId} draggableId={columnId} index={index}>
       {provided => (
-        <li className='li_column'
-            {...provided.draggableProps}
-            ref={provided.innerRef}>
-          <div className='column' id={columnId}>
-            <div className='column_items'>
-              <span className='column_title'
-                     {...provided.dragHandleProps}>{title}</span>
-              <span className='close_symbol' onClick={() => deleteColumn(columnId) }>x</span>
-            </div>
-            
-            <Droppable droppableId={columnId}
-                      type='task'>
+        <LiColumn {...provided.draggableProps}
+                  ref={provided.innerRef}>
+          <ColumnItems>
+            <ColumnTitle {...provided.dragHandleProps}>
+              {title}
+              <CloseSign onClick={() => deleteColumn(columnId) }>x</CloseSign>
+            </ColumnTitle>
+
+            <Droppable droppableId={columnId} type='task'>
               {provided => (
-                <ul className={columnId} 
-                    {...provided.droppableProps} 
-                    ref={provided.innerRef} >  
+                <ul {...provided.droppableProps} 
+                    ref={provided.innerRef} >
 
                   {Object.keys(columnTasks).length ?
                   Object.keys(columnTasks).map((task, index) => 
-                    <CardTask 
-                      id={columnTasks[task].id} 
-                      value={columnTasks[task].titleCard} 
-                      columnId={columnId}
-                      key={columnTasks[task].id} 
-                      deleteTask={handleDeleteTask} 
-                      addCurrentTask={addCurrentTask}
-                      index={index} /> ) : false }
+                    <CardTask id={columnTasks[task].id} 
+                              value={columnTasks[task].titleCard} 
+                              columnId={columnId}
+                              key={columnTasks[task].id} 
+                              deleteTask={handleDeleteTask} 
+                              addCurrentTask={addCurrentTask}
+                              index={index} /> ) 
+                  : false }
 
                   {provided.placeholder}
                 </ul>
               )}
             </Droppable>
 
-            {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} />}       
+            {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} createTask={setIsCreateTask} />}       
 
-            <button className='column_btn column_item-btn' onClick={handleAddTask}>Add task</button>   
+            <TaskBtn onClick={() => handleAddTask()}>Add task</TaskBtn>
 
             {isShowModal && <TaskModal value={descriptionCard} taskInfo={currentTask} setDescription={setDescriptionCard} showModal={setIsShowModal} /> }
-          </div>  
-        </li>      
+          
+          </ColumnItems>
+        </LiColumn>      
       )}            
     </Draggable>
   </>

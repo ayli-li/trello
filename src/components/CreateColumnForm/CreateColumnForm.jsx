@@ -1,15 +1,19 @@
 import React from 'react';
+//import styled from 'styled-components';
+
+import { LiColumn, CloseSign } from '../ColumnItem/ColumnItem';
+import { Btn } from '../ColumnList/ColumnList';
 
 import './CreateColumnForm.css';
 
 export const CreateColumnForm = ({ value, setValue, addColumn, resetAddingColumn }) => {
   return <>
-    <li className='li_column'>
+    <LiColumn>
       <form className='column_items'> 
         <input type='text' value={value} onChange={(e) => setValue(e.target.value)} />
-        <span className='close_symbol' onClick={() => resetAddingColumn()}>x</span>
+        <CloseSign onClick={() => resetAddingColumn()}>x</CloseSign>
       </form>
-      <button className='column_btn column_item-btn' onClick={() => addColumn()}>Add column</button>
-    </li>
+      <Btn onClick={() => addColumn()}>Add column</Btn>
+    </LiColumn>
   </>
 }

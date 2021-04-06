@@ -1,13 +1,10 @@
-.card_task {
+/* .card_task {
   cursor: pointer;
   padding: 5px;
-}
+} */
 
-.card_task:hover {
+/* .card_task:hover {
   color: #fffffa;
   background-color: lightgray;
-}
+} */
 
-.card_value {
-  min-width: 190px;
-}

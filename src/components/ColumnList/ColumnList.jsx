@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 
 import './ColumnList.css';
 import { CreateColumnForm } from '../CreateColumnForm/CreateColumnForm';
@@ -10,6 +11,41 @@ import { ColumnItem } from '../ColumnItem/ColumnItem';
 import { addColumn, removeColumn, removeTaskIdFromColumn, switchTasksOrderInTheSameColumn, switchTasksOrderInTheDifferentColumns } from '../../store/column/action';
 import { removeTask } from '../../store/task/action';
 import { addColumnOrder, removeColumnOrder, switchColumnOrder } from '../../store/columnOrder/action';
+
+const Columns = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  padding-left: 5px;
+  padding-top: 5px;
+`;
+
+const UlColumns = styled.ul`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;  
+  list-style: none;
+  padding: 0;  
+  margin: 0;
+`;
+
+export const Btn = styled.button`
+  background-color: #ebecf0;
+  margin-top: 15px;
+  min-width: 115px;
+  border: 0.5px solid gray;
+  color: #172b4d;
+  border-radius: 1.5px;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  :hover {
+    color: #fffffa;
+    background-color: lightgray;
+  }
+`;
 
 export const ColumnList = () => {
 
@@ -40,7 +76,7 @@ export const ColumnList = () => {
   const handleResetAddingColumn = () => setIsCreateColumn(false);
 
   const handleDeleteColumnItem = (id) => {
-    columnList[id].taskIds.map(taskId => dispatch(removeTask(taskId)) && dispatch(removeTaskIdFromColumn(taskId, id)));
+    columnList[id].taskIds.forEach(taskId => dispatch(removeTask(taskId)) && dispatch(removeTaskIdFromColumn(taskId, id)));
     dispatch(removeColumn(id));
     dispatch(removeColumnOrder(id));
   }
@@ -105,37 +141,36 @@ export const ColumnList = () => {
 
   return <>
     <DragDropContext onDragEnd={handleOnDragEnd}>
-      <div className='columns'>
+      <Columns>
 
         <Droppable droppableId='all-columns' direction='horizontal' type='column'> 
-        {provided => (    
-          <ul className='ul_columns'
-              {...provided.droppableProps}
-              ref={provided.innerRef}>
+          {provided => (
+            <UlColumns {...provided.droppableProps}
+                      ref={provided.innerRef} >
 
-            {columnOrder.length ?
-            columnOrder.map((columnId, index) => {
-              const column = columnList[columnId];
-              const columnTasks = column.taskIds.map(taskId => tasks[taskId] );
-              
-              return <ColumnItem title={column.title} 
-                                 deleteColumn={handleDeleteColumnItem} 
-                            columnId={column.id}
-                            columnTasks={columnTasks}
-                            index={index} /> }) : false }                    
-            {provided.placeholder}
-          </ul>
-        )}
+              {columnOrder.length ?
+              columnOrder.map((columnId, index) => {
+                const column = columnList[columnId];
+                const columnTasks = column.taskIds.map(taskId => tasks[taskId] );
+                
+                return <ColumnItem title={column.title} 
+                                   deleteColumn={handleDeleteColumnItem} 
+                                   columnId={column.id}
+                                   columnTasks={columnTasks}
+                                   index={index} /> }) : false } 
+                                                      
+              {provided.placeholder}
+
+            </UlColumns>
+          )}
         </Droppable>
 
         {isCreateColumn && <CreateColumnForm value={title} setValue={setTitle} addColumn={handleAddColumn} 
         resetAddingColumn={handleResetAddingColumn} /> }
       
-        {!isCreateColumn && <button onClick={() => setIsCreateColumn(true)} className='column_btn'>
-          Add column +
-        </button>}
+        {!isCreateColumn && <Btn onClick={() => setIsCreateColumn(true)} >Add column +</Btn> }
         
-      </div>
+      </Columns>
     </DragDropContext>
   </>
 }

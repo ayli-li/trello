@@ -13,12 +13,20 @@ const LiTask = styled.li`
   font-size: 16px;
   cursor: pointer;
   padding: 5px;
+  border-top: 0.5px solid lightgray;
+  ${'' /* border-bottom: 0.5px solid lightgray; */}
 
   :hover {
     color: #fffffa;
-    background-color: lightgray;
+    background-color: rgba(255,83,73, 0.6);
   }
 `;
+
+const TaskValue = styled.span`
+  min-width: 182px;
+  word-wrap: break-word;
+`;
+
 
 export const CardTask = ({ id, value, columnId, deleteTask, addCurrentTask, index }) => { 
 
@@ -28,7 +36,7 @@ export const CardTask = ({ id, value, columnId, deleteTask, addCurrentTask, inde
                      {...provided.draggableProps} 
                      {...provided.dragHandleProps}
                      id={id} >
-               <span onClick={() => addCurrentTask(id)} >{value}</span>
+               <TaskValue onClick={() => addCurrentTask(id)} >{value}</TaskValue>
                <CloseSign className='close_symbol' onClick={() => deleteTask(id, columnId) }>x</CloseSign>
              </LiTask>
            )}

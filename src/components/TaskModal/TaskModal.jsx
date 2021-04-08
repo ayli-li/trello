@@ -1,8 +1,37 @@
 import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+
 import { addTaskDescription } from '../../store/task/action';
+import { CloseSign } from '../ColumnItem/ColumnItem';
+import { Btn } from '../ColumnList/ColumnList';
 
 import './TaskModal.css';
+
+const ModalWindow = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  min-width: 500px;
+  background-color: gray;
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+`;
+
 
 export const TaskModal = ({ value, showModal, taskInfo, setDescription }) => {
 
@@ -43,18 +72,18 @@ export const TaskModal = ({ value, showModal, taskInfo, setDescription }) => {
     setDescription('');
   };  
   
-  return <div className='task_modal' ref={myRef} onClick={handleClickInside}>
-      <div className='modal_header'>
+  return <ModalWindow ref={myRef} onClick={handleClickInside}>
+      <ModalHeader>
         <span>MODAL WINDOW</span>
-        <span className='close_symbol' onClick={() => showModal(false) }>x</span>
-      </div>
+        <CloseSign className='close_symbol' onClick={() => showModal(false) }>x</CloseSign>
+      </ModalHeader>
 
-      <div className='modal_content'>
+      <ModalContent>
         <div>{taskInfo.titleCard}</div>
         <form>
           <textarea defaultValue={value} onChange={(e) => setModalDescription(e.target.value) }></textarea>
         </form>
-        <button className='column_btn' onClick={() => handleAddDescription()}>Add description</button>
-      </div>
-  </div>
+        <Btn className='column_btn' onClick={() => handleAddDescription()}>Add description</Btn>
+      </ModalContent>
+  </ModalWindow>
 }

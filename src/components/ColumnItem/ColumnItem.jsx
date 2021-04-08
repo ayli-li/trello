@@ -15,40 +15,43 @@ import { addTaskIdToColumn, removeTaskIdFromColumn } from '../../store/column/ac
 import './ColumnItem.css';
 
 export const LiColumn = styled.li`
-  min-width: 200px;
+  max-width: 200px;
   box-sizing: border-box;
   height: min-content;
   margin-right: 50px;
-  border: 0.5px solid gray;
+  border: 0.5px solid lightgray;
   border-radius: 1.5px;
   list-style: none;
-  background-color: #ebecf0;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
+  margin-bottom: 15px;
 `;
 
 const ColumnTitleItems = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  margin-bottom: 10px;
-  min-width: 185px;
+  margin-bottom: 15px;
+  min-width: 200px;
+  box-sizing: border-box;
   padding-left: 5px;
   padding-top: 5px;
   padding-right: 5px;
 `;
 
 const ColumnTitle = styled.span`
+  flex-grow: 2;
   text-align: center;
   color: #172b4d;
   font-size: 16px;
   font-weight: bold;
+  word-wrap: break-word;
+  max-width: 175px;
 `;
 
 export const CloseSign = styled.span`
   cursor: pointer;
-  margin-right: 3px;
 `;
 
 export const ColumnItems = styled.div`
@@ -58,8 +61,13 @@ export const ColumnItems = styled.div`
   font-size: 16px;
 `;
 
+const UlTasks = styled.ul`
+  margin: 0;
+  padding: 0;
+`;
+
 const TaskBtn = styled.button`
-  background-color: #ebecf0;
+  background-color: #fff;
   border: 0.5px solid gray;
   color: #172b4d;
   border-radius: 1.5px;
@@ -69,8 +77,7 @@ const TaskBtn = styled.button`
   -moz-osx-font-smoothing: grayscale;
 
   :hover {
-    color: #fffffa;
-    background-color: lightgray;
+    background-color: rgba(0,255,255, 0.3);
   }
 `;
 
@@ -143,7 +150,7 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
 
             <Droppable droppableId={columnId} type='task'>
               {provided => (
-                <ul {...provided.droppableProps} 
+                <UlTasks {...provided.droppableProps} 
                     ref={provided.innerRef} >
 
                   {Object.keys(columnTasks).length ?
@@ -158,7 +165,7 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
                   : false }
 
                   {provided.placeholder}
-                </ul>
+                </UlTasks>
               )}
             </Droppable>
 

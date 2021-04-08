@@ -13,8 +13,9 @@ export const ColumnForm = styled.form`
   color: #172b4d;
   font-size: 16px;
   padding-left: 5px;
-  padding-top: 5px;
-  padding-right: 5px;
+  padding-top: 4px;
+  padding-right: 4px;
+  margin-bottom: 5px;
 `;
 
 export const CreateColumnForm = ({ value, setValue, addColumn, resetAddingColumn }) => {

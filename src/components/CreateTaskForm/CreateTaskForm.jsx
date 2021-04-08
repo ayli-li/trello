@@ -6,6 +6,11 @@ import { ColumnForm } from '../CreateColumnForm/CreateColumnForm';
 
 const TaskTextarea = styled.textarea`
   margin-bottom: 8px;
+  border: 0.5px solid lightgray;
+
+  :focus {
+    outline: none;
+  }
 `;
 
 export const CreateTaskForm = ({ value, setValue, resetAddingTask }) => {

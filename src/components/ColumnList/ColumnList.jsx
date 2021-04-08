@@ -24,7 +24,7 @@ const Columns = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   padding-left: 5px;
-  padding-top: 5px;
+  padding-top: 25px;
 `;
 
 const UlColumns = styled.ul`
@@ -41,9 +41,10 @@ export const Btn = styled.button`
   background-color: #fff;
   margin-top: 10px;
   min-width: 115px;
-  border: 0.5px solid gray;
+  border: 0.5px solid lightgray;
   color: #172b4d;
-  border-radius: 1.5px;
+  padding: 4px;
+  border-radius: 5px;
   cursor: pointer;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -51,6 +52,7 @@ export const Btn = styled.button`
 
   :hover {
     background-color: rgba(0,255,255, 0.3);
+    transition: 0.5s;
   }
 `;
 
@@ -153,10 +155,8 @@ export const ColumnList = () => {
   }
 
   return <>
-    
-      
-      <Container>
-        <Columns>
+    <Container>
+      <Columns>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId='all-columns' direction='horizontal' type='column'> 
             {provided => (
@@ -184,10 +184,8 @@ export const ColumnList = () => {
           resetAddingColumn={handleResetAddingColumn} /> }
         
           {!isCreateColumn && <Btn onClick={(e) => handleCreateColumn(e)} >Add column +</Btn> }
-          </DragDropContext>
-        </Columns>
-        </Container>
-      
-    
+        </DragDropContext>
+      </Columns>
+    </Container>
   </>
 }

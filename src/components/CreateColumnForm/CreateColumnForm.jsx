@@ -13,16 +13,34 @@ export const ColumnForm = styled.form`
   color: #172b4d;
   font-size: 16px;
   padding-left: 5px;
-  padding-top: 4px;
+  padding-top: 5px;
   padding-right: 4px;
   margin-bottom: 5px;
+`;
+
+const ColumnTitleInput = styled.input.attrs(props => ({
+  type: 'text',
+}))`
+  border: 0.5px solid lightgray; 
+  margin-right: 3px;
+  max-width: 175px;
+  padding: 0 0 0 3px;
+  color: #172b4d;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  :focus {
+    outline: none;
+  }
 `;
 
 export const CreateColumnForm = ({ value, setValue, addColumn, resetAddingColumn }) => {
   return <>
     <LiColumn>
       <ColumnForm> 
-        <input type='text' value={value} onChange={(e) => setValue(e.target.value)} />
+        <ColumnTitleInput value={value} onChange={(e) => setValue(e.target.value)} />
         <CloseSign onClick={() => resetAddingColumn()}>x</CloseSign>
       </ColumnForm>
       <Btn onClick={() => addColumn()}>Add column</Btn>

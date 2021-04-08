@@ -20,19 +20,20 @@ export const LiColumn = styled.li`
   height: min-content;
   margin-right: 50px;
   border: 0.5px solid lightgray;
-  border-radius: 1.5px;
+  border-radius: 5px;
   list-style: none;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   margin-bottom: 15px;
+  background-color: ${props => (props.isDragging ? 'white' : 'transparent')};
 `;
 
 const ColumnTitleItems = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 6px;
   min-width: 200px;
   box-sizing: border-box;
   padding-left: 5px;
@@ -45,7 +46,7 @@ const ColumnTitle = styled.span`
   text-align: center;
   color: #172b4d;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
   word-wrap: break-word;
   max-width: 175px;
 `;
@@ -62,15 +63,16 @@ export const ColumnItems = styled.div`
 `;
 
 const UlTasks = styled.ul`
-  margin: 0;
+  margin: 0 0 10px 0;
   padding: 0;
 `;
 
 const TaskBtn = styled.button`
   background-color: #fff;
-  border: 0.5px solid gray;
+  border: 0.5px solid lightgray;
+  padding: 4px;
   color: #172b4d;
-  border-radius: 1.5px;
+  border-radius: 5px;
   cursor: pointer;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -78,10 +80,11 @@ const TaskBtn = styled.button`
 
   :hover {
     background-color: rgba(0,255,255, 0.3);
+    transition: 0.5s;
   }
 `;
 
-export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }) => {
+export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index, isDragging }) => {
 
   const [isCreateTask, setIsCreateTask] = useState(false);
   const [titleCard, setTitleCard] = useState('');
@@ -139,9 +142,10 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
 
   return <>
     <Draggable key={columnId} draggableId={columnId} index={index}>
-      {provided => (
+      {(provided, snapshot) => (
         <LiColumn {...provided.draggableProps}
-                  ref={provided.innerRef}>
+                  ref={provided.innerRef}
+                  isDragging={snapshot.isDragging} >
           <ColumnItems>
             <ColumnTitleItems {...provided.dragHandleProps}>
               <ColumnTitle>{title}</ColumnTitle>
@@ -151,7 +155,7 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
             <Droppable droppableId={columnId} type='task'>
               {provided => (
                 <UlTasks {...provided.droppableProps} 
-                    ref={provided.innerRef} >
+                         ref={provided.innerRef} >
 
                   {Object.keys(columnTasks).length ?
                   Object.keys(columnTasks).map((task, index) => 

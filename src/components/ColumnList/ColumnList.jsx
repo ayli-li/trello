@@ -54,6 +54,10 @@ export const Btn = styled.button`
     background-color: rgba(0,255,255,1);
     transition: 0.5s;
   }
+
+  :focus {
+    outline: none;
+  }
 `;
 
 export const ColumnList = () => {

@@ -8,6 +8,14 @@ import { Btn } from '../ColumnList/ColumnList';
 
 import './TaskModal.css';
 
+const ModalOverlay = styled.div`
+  position: fixed;
+  background-color: gray;
+  opacity: .7;
+  height: 100%;
+  inset: 0;
+`;
+
 const ModalWindow = styled.div`
   position: absolute;
   top: 200px;
@@ -91,23 +99,28 @@ export const TaskModal = ({ value, showModal, taskInfo, setDescription }) => {
     addDescription(modalDescription);
     setDescription('');
   };  
-  
-  return <ModalWindow ref={myRef} onClick={handleClickInside}>
-      <ModalHeader>
-        <ModalTitle>Task {taskInfo.titleCard}</ModalTitle>
-        <CloseSign className='close_symbol' onClick={() => showModal(false) }>&times;</CloseSign>
-      </ModalHeader>
 
-      <ModalContent>
-        {!taskInfo.descriptionCard && <>
-          <form>
-            <ModalTextarea defaultValue={value} onChange={(e) => setModalDescription(e.target.value) }></ModalTextarea>
-          </form>
-          <Btn className='column_btn' onClick={() => handleAddDescription()}>Add description</Btn>
-        </> }
+  return <>
+  <ModalOverlay />
 
-        {taskInfo.descriptionCard && <div>{taskInfo.descriptionCard}</div>}
-        
-      </ModalContent>
+  <ModalWindow ref={myRef} onClick={handleClickInside}>
+    <ModalHeader>
+      <ModalTitle>Task {taskInfo.titleCard}</ModalTitle>
+      <CloseSign className='close_symbol' onClick={() => showModal(false) }>&times;</CloseSign>
+    </ModalHeader>
+
+    <ModalContent>
+
+      {!taskInfo.descriptionCard && <>
+        <form>
+          <ModalTextarea defaultValue={value} onChange={(e) => setModalDescription(e.target.value) } />
+        </form>
+        <Btn className='column_btn' onClick={handleAddDescription}>Add description</Btn>
+      </> }
+
+      {taskInfo.descriptionCard && <div>{taskInfo.descriptionCard}</div>}
+      
+    </ModalContent>
   </ModalWindow>
+</>
 }

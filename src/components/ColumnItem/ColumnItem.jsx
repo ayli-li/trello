@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { CreateTaskForm } from '../CreateTaskForm/CreateTaskForm';
 import { CardTask } from '../CardTask/CardTask';
 import { TaskModal } from '../TaskModal/TaskModal';
-//import { Btn } from '../ColumnList/ColumnList';
+import { Btn } from '../ColumnList/ColumnList';
 
 import { addTask, removeTask } from '../../store/task/action';
 import { addTaskIdToColumn, removeTaskIdFromColumn } from '../../store/column/action';
@@ -74,26 +74,26 @@ const UlTasks = styled.ul`
   background-color: ${props => (props.isDraggingOver ? 'rgba(0,255,255, 0.1)' : 'white')}
 `;
 
-const TaskBtn = styled.button`
-  background-color: #fff;
-  border: 0.5px solid lightgray;
-  padding: 4px;
-  color: #172b4d;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+// const TaskBtn = styled.button`
+//   background-color: #fff;
+//   border: 0.5px solid lightgray;
+//   padding: 4px;
+//   color: #172b4d;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
 
-  :hover {
-    background-color: rgba(0,255,255, 0.3);
-    transition: 0.5s;
-  }
+//   :hover {
+//     background-color: rgba(0,255,255, 0.3);
+//     transition: 0.5s;
+//   }
 
-  :focus {
-  outline: none;
-}
-`;
+//   :focus {
+//   outline: none;
+// }
+// `;
 
 export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index, handleOnDragStart }) => {
 
@@ -125,7 +125,7 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index, 
       createTask();
     }
 
-    setIsCreateTask(true);
+    setIsCreateTask(prev => !prev);
   }
 
   const handleResetAddingTask = () => setIsCreateTask(false);
@@ -152,12 +152,19 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index, 
   }
 
   return <>
-    <Draggable key={columnId} draggableId={columnId} index={index}>
+    <Draggable 
+      key={columnId} 
+      draggableId={columnId} 
+      index={index}>
       {(provided, snapshot) => (
-        <LiColumn {...provided.draggableProps}
-                  ref={provided.innerRef}
-                  isDragging={snapshot.isDragging} >
+
+        <LiColumn 
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+          isDragging={snapshot.isDragging} >
+
           <ColumnItems>
+
             <ColumnTitleItems {...provided.dragHandleProps}>
               <ColumnTitle>{title}</ColumnTitle>
               <CloseSign onClick={() => deleteColumn(columnId) }>&times;</CloseSign>
@@ -165,19 +172,21 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index, 
 
             <Droppable droppableId={columnId} type='task'>
               {(provided, snapshot) => (
-                <UlTasks {...provided.droppableProps} 
-                         ref={provided.innerRef}
-                         isDraggingOver={snapshot.isDraggingOver} >
+                <UlTasks 
+                  {...provided.droppableProps} 
+                  ref={provided.innerRef}
+                  isDraggingOver={snapshot.isDraggingOver} >
 
                   {Object.keys(columnTasks).length ?
                   Object.keys(columnTasks).map((task, index) => 
-                    <CardTask id={columnTasks[task].id} 
-                              value={columnTasks[task].titleCard} 
-                              columnId={columnId}
-                              key={columnTasks[task].id} 
-                              deleteTask={handleDeleteTask} 
-                              addCurrentTask={addCurrentTask}
-                              index={index} /> ) 
+                    <CardTask 
+                      id={columnTasks[task].id} 
+                      value={columnTasks[task].titleCard} 
+                      columnId={columnId}
+                      key={columnTasks[task].id} 
+                      deleteTask={handleDeleteTask} 
+                      addCurrentTask={addCurrentTask}
+                      index={index} /> ) 
                   : false }
 
                   {provided.placeholder}
@@ -185,9 +194,13 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index, 
               )}
             </Droppable>
 
-            {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} />}       
+            {isCreateTask && 
+              <CreateTaskForm 
+                value={titleCard} 
+                setValue={setTitleCard} 
+                resetAddingTask={handleResetAddingTask} /> }       
 
-            <TaskBtn onClick={() => handleAddTask()}>Add task</TaskBtn>
+            <Btn onClick={handleAddTask}>Add task</Btn>
 
             {isShowModal && <TaskModal value={descriptionCard} taskInfo={currentTask} setDescription={setDescriptionCard} showModal={setIsShowModal} /> }
           

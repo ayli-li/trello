@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import './ColumnList.css';
 import { CreateColumnForm } from '../CreateColumnForm/CreateColumnForm';
 import { ColumnItem } from '../ColumnItem/ColumnItem';
+import DarkModeToggle from '../DarkMode/DarkModeToggle';
 
 import { addColumn, removeColumn, removeTaskIdFromColumn, switchTasksOrderInTheSameColumn, switchTasksOrderInTheDifferentColumns } from '../../store/column/action';
 import { removeTask } from '../../store/task/action';
@@ -14,6 +15,7 @@ import { addColumnOrder, removeColumnOrder, switchColumnOrder } from '../../stor
 
 const Container = styled.div`
   display: flex;
+  flex-flow: column nowrap;
   width: 1400px;
   margin: 0 auto;
 `;
@@ -22,9 +24,7 @@ const Columns = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
-  justify-content: space-between;
   padding-left: 5px;
-  padding-top: 25px;
 `;
 
 const UlColumns = styled.ul`
@@ -51,7 +51,7 @@ export const Btn = styled.button`
   -moz-osx-font-smoothing: grayscale;
 
   :hover {
-    background-color: rgba(0,255,255, 0.3);
+    background-color: rgba(0,255,255,1);
     transition: 0.5s;
   }
 `;
@@ -94,6 +94,10 @@ export const ColumnList = () => {
     if (e) {
       columnOrder.length >= 5 ? setIsCreateColumn(false) : setIsCreateColumn(true);
     }    
+  }
+
+  const handleOnDragStart = () => {
+    
   }
 
   const handleOnDragEnd = (result) => {
@@ -156,8 +160,10 @@ export const ColumnList = () => {
 
   return <>
     <Container>
+      <DarkModeToggle />
+
       <Columns>
-        <DragDropContext onDragEnd={handleOnDragEnd}>
+        <DragDropContext onDragEnd={handleOnDragEnd} onDragStart={handleOnDragStart}>
           <Droppable droppableId='all-columns' direction='horizontal' type='column'> 
             {provided => (
               <UlColumns {...provided.droppableProps}

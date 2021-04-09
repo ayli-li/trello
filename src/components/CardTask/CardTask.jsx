@@ -14,6 +14,7 @@ const LiTask = styled.li`
 const TaskValue = styled.div`
   min-width: 166px;
   margin: 5px;
+  margin-right: 3px;
   padding: 5px;
   border: 0.5px solid lightgray;
   border-radius: 3px;
@@ -29,7 +30,6 @@ const TaskValue = styled.div`
   }
 `;
 
-
 export const CardTask = ({ id, value, columnId, deleteTask, addCurrentTask, index }) => { 
 
   return <Draggable key={id} draggableId={id} index={index}>
@@ -39,7 +39,7 @@ export const CardTask = ({ id, value, columnId, deleteTask, addCurrentTask, inde
                      {...provided.dragHandleProps}                     
                      id={id} >
                <TaskValue onClick={() => addCurrentTask(id)} isDragging={snapshot.isDragging} >{value}</TaskValue>
-               <CloseSign className='close_symbol' onClick={() => deleteTask(id, columnId) }>x</CloseSign>
+               <CloseSign className='close_symbol' onClick={() => deleteTask(id, columnId)} isDragging={snapshot.isDragging}>&times;</CloseSign>
              </LiTask>
            )}
          </Draggable>

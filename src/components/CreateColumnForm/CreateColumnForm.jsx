@@ -14,7 +14,7 @@ export const ColumnForm = styled.form`
   font-size: 16px;
   padding-left: 5px;
   padding-top: 5px;
-  padding-right: 4px;
+  padding-right: 2px;
   margin-bottom: 5px;
 `;
 
@@ -22,7 +22,6 @@ const ColumnTitleInput = styled.input.attrs(props => ({
   type: 'text',
 }))`
   border: 0.5px solid lightgray; 
-  margin-right: 3px;
   max-width: 175px;
   padding: 0 0 0 3px;
   color: #172b4d;
@@ -41,7 +40,7 @@ export const CreateColumnForm = ({ value, setValue, addColumn, resetAddingColumn
     <LiColumn>
       <ColumnForm> 
         <ColumnTitleInput value={value} onChange={(e) => setValue(e.target.value)} />
-        <CloseSign onClick={() => resetAddingColumn()}>x</CloseSign>
+        <CloseSign onClick={() => resetAddingColumn()}>&times;</CloseSign>
       </ColumnForm>
       <Btn onClick={() => addColumn()}>Add column</Btn>
     </LiColumn>

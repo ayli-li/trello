@@ -10,19 +10,30 @@ import './TaskModal.css';
 
 const ModalWindow = styled.div`
   position: absolute;
+  top: 200px;
   left: 0;
   right: 0;
   margin: auto;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-around;
-  min-width: 500px;
-  background-color: gray;
+  max-width: 350px;
+  width: 100%;
+  border: 0.5px solid lightgray;
+  background-color: white;
+  z-index: 1;
+  padding: 5px;
 `;
 
 const ModalHeader = styled.div`
   display: flex;
-  justify-content: space-around;
+  padding-bottom: 15px;
+`;
+
+const ModalTitle = styled.span`
+  font-weight: 500;
+  flex-grow: 2;
+  text-align: center;
 `;
 
 const ModalContent = styled.div`
@@ -30,6 +41,15 @@ const ModalContent = styled.div`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+`;
+
+const ModalTextarea = styled.textarea`
+  resize: none;
+  color: #172b4d;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 `;
 
 
@@ -74,16 +94,20 @@ export const TaskModal = ({ value, showModal, taskInfo, setDescription }) => {
   
   return <ModalWindow ref={myRef} onClick={handleClickInside}>
       <ModalHeader>
-        <span>MODAL WINDOW</span>
-        <CloseSign className='close_symbol' onClick={() => showModal(false) }>x</CloseSign>
+        <ModalTitle>Task {taskInfo.titleCard}</ModalTitle>
+        <CloseSign className='close_symbol' onClick={() => showModal(false) }>&times;</CloseSign>
       </ModalHeader>
 
       <ModalContent>
-        <div>{taskInfo.titleCard}</div>
-        <form>
-          <textarea defaultValue={value} onChange={(e) => setModalDescription(e.target.value) }></textarea>
-        </form>
-        <Btn className='column_btn' onClick={() => handleAddDescription()}>Add description</Btn>
+        {!taskInfo.descriptionCard && <>
+          <form>
+            <ModalTextarea defaultValue={value} onChange={(e) => setModalDescription(e.target.value) }></ModalTextarea>
+          </form>
+          <Btn className='column_btn' onClick={() => handleAddDescription()}>Add description</Btn>
+        </> }
+
+        {taskInfo.descriptionCard && <div>{taskInfo.descriptionCard}</div>}
+        
       </ModalContent>
   </ModalWindow>
 }

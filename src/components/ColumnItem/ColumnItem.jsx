@@ -26,7 +26,7 @@ export const LiColumn = styled.li`
   flex-flow: column nowrap;
   justify-content: space-between;
   margin-bottom: 15px;
-  background-color: ${props => (props.isDragging ? 'white' : 'transparent')};
+  background-color: white;
 `;
 
 const ColumnTitleItems = styled.div`
@@ -38,7 +38,7 @@ const ColumnTitleItems = styled.div`
   box-sizing: border-box;
   padding-left: 5px;
   padding-top: 5px;
-  padding-right: 5px;
+  padding-right: 4px;
 `;
 
 const ColumnTitle = styled.span`
@@ -53,6 +53,12 @@ const ColumnTitle = styled.span`
 
 export const CloseSign = styled.span`
   cursor: pointer;
+  display: ${props => (props.isDragging ? 'none' : 'flex')};
+
+  :hover {
+    color: #ff9892;
+    transition: 0.5s;
+  }
 `;
 
 export const ColumnItems = styled.div`
@@ -64,7 +70,8 @@ export const ColumnItems = styled.div`
 
 const UlTasks = styled.ul`
   margin: 0 0 10px 0;
-  padding: 0;
+  padding: 0;  
+  background-color: ${props => (props.isDraggingOver ? 'rgba(0,255,255, 0.1)' : 'white')}
 `;
 
 const TaskBtn = styled.button`
@@ -82,9 +89,13 @@ const TaskBtn = styled.button`
     background-color: rgba(0,255,255, 0.3);
     transition: 0.5s;
   }
+
+  :focus {
+  outline: none;
+}
 `;
 
-export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index, isDragging }) => {
+export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index, handleOnDragStart }) => {
 
   const [isCreateTask, setIsCreateTask] = useState(false);
   const [titleCard, setTitleCard] = useState('');
@@ -138,7 +149,7 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index, 
       setCurrentTask(task);
       setIsShowModal(true);
     }    
-  }  
+  }
 
   return <>
     <Draggable key={columnId} draggableId={columnId} index={index}>
@@ -149,13 +160,14 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index, 
           <ColumnItems>
             <ColumnTitleItems {...provided.dragHandleProps}>
               <ColumnTitle>{title}</ColumnTitle>
-              <CloseSign onClick={() => deleteColumn(columnId) }>x</CloseSign>
+              <CloseSign onClick={() => deleteColumn(columnId) }>&times;</CloseSign>
             </ColumnTitleItems>
 
             <Droppable droppableId={columnId} type='task'>
-              {provided => (
+              {(provided, snapshot) => (
                 <UlTasks {...provided.droppableProps} 
-                         ref={provided.innerRef} >
+                         ref={provided.innerRef}
+                         isDraggingOver={snapshot.isDraggingOver} >
 
                   {Object.keys(columnTasks).length ?
                   Object.keys(columnTasks).map((task, index) => 
@@ -173,7 +185,7 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index, 
               )}
             </Droppable>
 
-            {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} createTask={setIsCreateTask} />}       
+            {isCreateTask && <CreateTaskForm value={titleCard} setValue={setTitleCard} resetAddingTask={handleResetAddingTask} />}       
 
             <TaskBtn onClick={() => handleAddTask()}>Add task</TaskBtn>
 

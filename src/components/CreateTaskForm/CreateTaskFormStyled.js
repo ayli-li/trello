@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const TaskTextarea = styled.textarea`
   resize: none;
   border: 0.5px solid lightgray;
+  border-radius: 3px;
   color: #172b4d;
   font-size: 14px;
   padding: 10.5px 0 5px 5px;

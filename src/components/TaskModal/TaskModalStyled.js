@@ -23,6 +23,7 @@ export const ModalWindow = styled.div`
   background-color: white;
   z-index: 1;
   padding: 20px;
+  border-radius: 3px;
 `;
 
 export const ModalHeader = styled.div`
@@ -34,6 +35,7 @@ export const ModalTitle = styled.span`
   font-weight: 500;
   flex-grow: 2;
   text-align: center;
+  word-break: break-word
 `;
 
 export const ModalContent = styled.div`
@@ -41,4 +43,8 @@ export const ModalContent = styled.div`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+`;
+
+export const ModalDescription = styled.div`
+  margin: 15px 0;
 `;

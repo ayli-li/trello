@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { addTaskDescription } from '../../store/task/action';
 
-import { ModalOverlay, ModalWindow, ModalHeader, ModalTitle, ModalContent } from './TaskModalStyled.js';
+import { ModalOverlay, ModalWindow, ModalHeader, ModalTitle, ModalContent, ModalDescription } from './TaskModalStyled.js';
 import { CloseSign } from '../ColumnItem/ColumnItemStyled.js';
 import { TaskTextarea } from '../CreateTaskForm/CreateTaskFormStyled.js';
 import { Btn } from '../ColumnList/ColumnListStyled.js';
@@ -63,7 +63,7 @@ export const TaskModal = ({ value, showModal, description, id }) => {
           <Btn className='column_btn' onClick={addDescription}>Add description</Btn>
         </> }
 
-        {description && <div>{description}</div>}
+        {description && <ModalDescription>{description}</ModalDescription>}
         
       </ModalContent>
 

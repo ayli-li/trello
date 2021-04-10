@@ -39,7 +39,7 @@ export const CloseSign = styled.span`
   margin-right: 2px;
   display: ${props => (props.isDragging ? 'none' : 'flex')};
   padding-top: ${props => (props.taskCloseSign) ? '6px' : '0'};
-  padding-right: ${props => (props.taskCloseSign) ? '0.5px' : '0'};
+  padding-right: ${props => (props.taskCloseSign) ? '1px' : '0'};
 
   :hover {
     color: rgba(0,255,255, 0.7);

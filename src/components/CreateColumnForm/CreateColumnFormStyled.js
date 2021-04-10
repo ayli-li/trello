@@ -28,6 +28,7 @@ export const ColumnTitleInput = styled.input.attrs(props => ({
   type: 'text',
 }))`
   border: 0.5px solid lightgray; 
+  border-radius: 3px;
   max-width: 160px;
   padding-left: 3px;
   color: #172b4d;

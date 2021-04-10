@@ -29,5 +29,5 @@ export const TaskValueItems = styled.div`
 `;
 
 export const TaskValue = styled.span`
-  width: 100%;
+  width: 89%;
 `;

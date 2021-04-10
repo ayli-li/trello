@@ -19,6 +19,7 @@ body.dark-mode .dark-mode-toggle > button:last-child {
 .dark-mode-toggle {
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 10px;
 }
 
 .dark-mode-toggle > button {

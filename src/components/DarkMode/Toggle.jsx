@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Toggle = ({ checked, onChange }) => (
+export const Toggle = ({ checked, onChange }) => (
   <span className="toggle-control">
     <input
       className="dmcheck"
@@ -12,5 +12,3 @@ const Toggle = ({ checked, onChange }) => (
     <label htmlFor="dmcheck" />
   </span>
 );
-
-export default Toggle;

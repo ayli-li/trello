@@ -119,7 +119,7 @@ export const ColumnList = () => {
               <UlColumns {...provided.droppableProps}
                          ref={provided.innerRef} >
 
-                {columnOrder.length &&
+                {columnOrder.length ?
                 columnOrder.map((columnId, index) => {
                   const column = columnList[columnId];
                   const columnTasks = column.taskIds.map(taskId => tasks[taskId] );
@@ -130,7 +130,7 @@ export const ColumnList = () => {
                             columnId={column.id}
                             columnTasks={columnTasks}
                             index={index}
-                            key={column.id} /> }) } 
+                            key={column.id} /> }) : null } 
                                                         
                 {provided.placeholder}
 

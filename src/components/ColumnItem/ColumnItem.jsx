@@ -130,7 +130,7 @@ export const ColumnItem = ({ title,
                           description={columnTasks[task].descriptionCard}                       
                           deleteTask={handleDeleteTask}  
                           index={index} /> ) 
-                    : false }
+                    : null }
 
                     {provided.placeholder}
 

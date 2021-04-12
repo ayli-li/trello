@@ -28,17 +28,27 @@ export const ModalWindow = styled.div`
 
 export const ModalHeader = styled.div`
   display: flex;
-  margin-bottom: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 `;
 
 export const ModalTitle = styled.span`
   font-weight: 500;
-  flex-grow: 2;
-  text-align: center;
-  word-break: break-word
+  word-break: break-word;
+  padding-right: 15px;
+  padding-left: 3px;
+  cursor: pointer;
 `;
 
-export const ModalContent = styled.div`
+export const ModalFormContent = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ModalForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -46,5 +56,13 @@ export const ModalContent = styled.div`
 `;
 
 export const ModalDescription = styled.div`
-  margin: 15px 0;
+  margin-bottom: 15px;
+  padding-left: 3px;
+`;
+
+export const DescriptionValue = styled.div`
+  word-break: break-word;
+  margin-top: 5px;
+  padding-left: 10px;
+  cursor: pointer;
 `;

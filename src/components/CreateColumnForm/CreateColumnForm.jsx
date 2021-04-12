@@ -4,16 +4,17 @@ import { ColumnCreator, ColumnForm, ColumnTitleInput } from './CreateColumnFormS
 import { CloseSign } from '../ColumnItem/ColumnItemStyled.js';
 import { Btn } from '../ColumnList/ColumnListStyled.js';
 
-export const CreateColumnForm = ({ value, setValue, addColumn, addColumnByEnter, resetAddingColumn }) => {
+export const CreateColumnForm = ({ value, setValue, addColumn, resetAddingColumn }) => {
 
-  const handlePreventEvent = (e) => {
+  const handleSubmit = (e) => {
+    addColumn();
     e.preventDefault();
   }
 
   return <>
     <ColumnCreator>
 
-      <ColumnForm onSubmit={handlePreventEvent}> 
+      <ColumnForm onSubmit={(e) => handleSubmit(e)}> 
 
         <ColumnTitleInput value={value} onChange={(e) => setValue(e.target.value)} />
         <CloseSign onClick={() => resetAddingColumn()}>&times;</CloseSign>

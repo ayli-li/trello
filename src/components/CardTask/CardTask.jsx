@@ -3,8 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 import { TaskModal } from '../TaskModal/TaskModal';
 
-import { LiTask, TaskValueItems, TaskValue } from './CardTaskStyled.js';
-import { CloseSign } from '../ColumnItem/ColumnItemStyled.js';
+import { LiTask, TaskValue } from './CardTaskStyled.js';
 
 export const CardTask = ({ id, value, columnId, description, deleteTask, index }) => { 
 
@@ -15,28 +14,26 @@ export const CardTask = ({ id, value, columnId, description, deleteTask, index }
 
       <LiTask 
         ref={provided.innerRef} 
-        {...provided.draggableProps} 
-        {...provided.dragHandleProps}                     
+        {...provided.draggableProps}
         id={id} >
 
-        <TaskValueItems isDragging={snapshot.isDragging}>
-          <TaskValue onClick={() => setIsShowModal(true)} >
-            {value}
-          </TaskValue>
+        <TaskValue 
+          isDragging={snapshot.isDragging} 
+          {...provided.dragHandleProps} 
+          onClick={() => setIsShowModal(true)} >
+
+          {value}
           
-          
-          <CloseSign 
-            className='close_symbol' 
-            onClick={() => deleteTask(id, columnId)} 
-            isDragging={snapshot.isDragging}>&times;</CloseSign>
-        </TaskValueItems>
+        </TaskValue>          
         
         {isShowModal && 
-          <TaskModal 
+          <TaskModal
             id={id}
+            columnId={columnId}
             value={value}
             description={description}
-            showModal={setIsShowModal} /> }
+            showModal={setIsShowModal}
+            deleteTask={deleteTask} /> }
                  
       </LiTask>
 

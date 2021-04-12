@@ -6,7 +6,7 @@ export const TaskTextarea = styled.textarea`
   border-radius: 3px;
   color: #172b4d;
   font-size: 14px;
-  padding: 10.5px 0 5px 5px;
+  padding: 9px 5px;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

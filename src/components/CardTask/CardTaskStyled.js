@@ -2,17 +2,14 @@ import styled from 'styled-components';
 
 export const LiTask = styled.li`
   display: flex;
+  margin-bottom: 15px;
 `;
 
-export const TaskValueItems = styled.div`
-  display: flex;
-  flex-flow: row nowrap; 
-  justify-content: space-between; 
-  align-items: center;
+export const TaskValue = styled.div`
+  vertical-align: center;
   box-sizing: border-box;
-  padding: 5px 0 5px 5px;
+  padding: 9px 0 9px 5px;
   width: 189px;
-  margin-bottom: 10px;
   border: 0.5px solid lightgray;
   list-style: none;
   border-radius: 3px;
@@ -26,8 +23,4 @@ export const TaskValueItems = styled.div`
     background-color: #ff9892;
     transition: 0.5s;
   }
-`;
-
-export const TaskValue = styled.span`
-  width: 89%;
 `;

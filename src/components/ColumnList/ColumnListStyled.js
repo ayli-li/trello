@@ -30,11 +30,12 @@ export const UlColumns = styled.ul`
 `;
 
 export const Btn = styled.button`
-  background-color: #fff;
-  min-width: 115px;
+  background-color: ${props => (props.deleteTask ? '#ff9892' : '#fff')};
+  min-width: ${props => (props.deleteTask ? '70px' : '115px')};
   border: 0.5px solid lightgray;
-  color: #172b4d;
+  color: ${props => (props.deleteTask ? 'white' : '#172b4d')};
   padding: 4px;
+  margin: ${props => (props.deleteTask ? '12px 0 0 225px' : '0')};
   border-radius: 5px;
   cursor: pointer;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
@@ -42,7 +43,7 @@ export const Btn = styled.button`
   -moz-osx-font-smoothing: grayscale;
 
   :hover {
-    background-color: rgba(0,255,255,1);
+    background-color: ${props => (props.deleteTask ? '#ff736d' : 'rgba(0,255,255,1)')};
     transition: 0.5s;
   }
 

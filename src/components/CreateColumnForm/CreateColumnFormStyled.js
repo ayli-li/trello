@@ -19,6 +19,7 @@ export const ColumnForm = styled.form`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+  align-items: ${props => (props.formTextarea ? 'flex-start' : 'center')};
   color: #172b4d;
   font-size: 16px;
   margin-bottom: 20px;
@@ -30,7 +31,7 @@ export const ColumnTitleInput = styled.input.attrs(props => ({
   border: 0.5px solid lightgray; 
   border-radius: 3px;
   max-width: 160px;
-  padding-left: 3px;
+  padding: 3px;
   color: #172b4d;
   font-size: 16px;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;

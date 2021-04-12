@@ -99,7 +99,8 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
               <CreateTaskForm 
                 value={titleCard} 
                 setValue={setTitleCard} 
-                resetAddingTask={handleResetAddingTask} /> }       
+                resetAddingTask={handleResetAddingTask}
+                addTask={handleAddTask} /> }       
 
             <Btn onClick={handleAddTask}>Add task</Btn>            
           

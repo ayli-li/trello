@@ -21,6 +21,7 @@ export const ColumnTitleItems = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;  
+  align-items: center;
   margin-bottom: 10px;
   box-sizing: border-box;
 `;
@@ -30,14 +31,14 @@ export const ColumnTitle = styled.span`
   font-size: 18px;
   font-weight: 500;
   word-wrap: break-word;
-  width: 175px; 
+  width: 170px;
+  margin-right: 5px; 
 `;
 
 export const CloseSign = styled.span`
   cursor: pointer;
   font-size: 22px;
   margin-right: 2px;
-  display: ${props => (props.isDragging ? 'none' : 'flex')};
   padding-top: ${props => (props.taskCloseSign) ? '6px' : '0'};
   padding-right: ${props => (props.taskCloseSign) ? '1px' : '0'};
 
@@ -58,8 +59,4 @@ export const UlTasks = styled.ul`
   margin: 10px 0 0 0;
   padding: 0;  
   background-color: ${props => (props.isDraggingOver ? 'rgba(0,255,255, 0.1)' : 'white')};
-
-  :last-child {
-    margin-bottom: 0;
-  }
 `;

@@ -3,7 +3,8 @@ import createReducer from "../../utils/createReducer";
 import {
   ADD_TASK,
   REMOVE_TASK,
-  ADD_DESCRIPTION
+  ADD_DESCRIPTION,
+  RENAME_TASK
 } from "./constants";
 
 // const mockInitialState = [
@@ -62,10 +63,22 @@ const addTaskDescription = (state, { descriptionCard, id }) => ({
   }
 });
 
+const renameTaskInModal = (state, { id, value }) => ({
+  ...state,
+  tasks: {
+    ...state.tasks,
+    [id]: {
+      ...state.tasks[id],
+      titleCard: value
+    }
+  }
+})
+
 const strategyMap = {
   [ADD_TASK]: addTaskToColumn,
   [REMOVE_TASK]: removeTaskFromColumn,
   [ADD_DESCRIPTION]: addTaskDescription,
+  [RENAME_TASK]: renameTaskInModal
 };
 
 const tasksReducer = createReducer(strategyMap, initialState);

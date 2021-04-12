@@ -1,7 +1,8 @@
 import {
   ADD_TASK,
   REMOVE_TASK,
-  ADD_DESCRIPTION
+  ADD_DESCRIPTION,
+  RENAME_TASK
 } from './constants';
 
 export const addTask = (task) => ({
@@ -19,3 +20,9 @@ export const addTaskDescription = (descriptionCard, id) => ({
   descriptionCard,
   id
 });
+
+export const renameTaskInModal = (id, value) => ({
+  type: RENAME_TASK,
+  id,
+  value
+})

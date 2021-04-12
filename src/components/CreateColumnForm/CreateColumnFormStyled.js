@@ -16,6 +16,7 @@ export const ColumnCreator = styled.div`
 `;
 
 export const ColumnForm = styled.form`
+  width: 100%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;

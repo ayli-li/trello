@@ -54,6 +54,7 @@ export const ModalForm = styled.form`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 export const ModalDescription = styled.div`

@@ -143,7 +143,7 @@ export const ColumnList = () => {
               addColumn={handleAddColumn} 
               resetAddingColumn={handleResetAddingColumn} /> }
         
-          {!isCreateColumn && <Btn onClick={() => setIsCreateColumn(true)} >Add column +</Btn> }
+          {!isCreateColumn && <Btn addColumn onClick={() => setIsCreateColumn(true)} >Add column +</Btn> }
 
         </DragDropContext>        
       </Columns>

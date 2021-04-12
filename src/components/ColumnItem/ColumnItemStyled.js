@@ -12,7 +12,7 @@ export const LiColumn = styled.li`
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  background-color: white;
+  background-color: #fffafa;
   padding: 15px;
   margin-left: 20px;
 `;
@@ -57,5 +57,5 @@ export const ColumnItems = styled.div`
 export const UlTasks = styled.ul`
   margin: 10px 0 0 0;
   padding: 0;  
-  background-color: ${props => (props.isDraggingOver ? 'rgba(0,255,255, 0.1)' : 'white')};
+  background-color: ${props => (props.isDraggingOver ? 'rgba(0,255,255, 0.1)' : 'inherit')};
 `;

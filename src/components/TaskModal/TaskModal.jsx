@@ -118,7 +118,7 @@ export const TaskModal = ({ value, showModal, description, id, columnId, deleteT
               value={modalDescription} />
           </ModalForm>
 
-          <Btn onClick={addDescription}>Add description</Btn>
+          <Btn description onClick={addDescription}>Add description</Btn>
         </ModalFormContent> }
 
       {description && !showModalForm &&

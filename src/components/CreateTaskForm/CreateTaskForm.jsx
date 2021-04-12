@@ -1,5 +1,5 @@
 import React from 'react';
-import OutsideClickHandler from 'react-outside-click-handler';
+//import OutsideClickHandler from 'react-outside-click-handler';
 
 import { TaskTextarea } from './CreateTaskFormStyled.js';
 import { ColumnForm } from '../CreateColumnForm/CreateColumnFormStyled.js';
@@ -17,16 +17,13 @@ export const CreateTaskForm = ({ value, setValue, resetAddingTask, addTask }) =>
     }
   }
 
-  return <OutsideClickHandler onOutsideClick={() => resetAddingTask()}>
-    <ColumnForm onSubmit={handleSubmit} formTextarea>    
-        <TaskTextarea 
-          autoFocus={true}
-          rows={3} 
-          cols={21}  
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={(e) => onEnterPress(e)} 
-          placeholder="Input title card" />
-    </ColumnForm>
-  
-  </OutsideClickHandler>
+  return <ColumnForm onSubmit={handleSubmit} formTextarea>    
+    <TaskTextarea 
+      autoFocus={true}
+      rows={3} 
+      cols={21}  
+      onChange={(e) => setValue(e.target.value)}
+      onKeyDown={(e) => onEnterPress(e)} 
+      placeholder="Input title card" />
+  </ColumnForm>
 }

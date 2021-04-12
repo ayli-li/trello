@@ -117,18 +117,20 @@ export const ColumnList = () => {
             {provided => (
     
               <UlColumns {...provided.droppableProps}
-                        ref={provided.innerRef} >
+                         ref={provided.innerRef} >
 
-                {columnOrder.length ?
+                {columnOrder.length &&
                 columnOrder.map((columnId, index) => {
                   const column = columnList[columnId];
                   const columnTasks = column.taskIds.map(taskId => tasks[taskId] );
                   
-                  return <ColumnItem title={column.title} 
-                                     deleteColumn={handleDeleteColumnItem} 
-                                     columnId={column.id}
-                                     columnTasks={columnTasks}
-                                     index={index} /> }) : false } 
+                  return <ColumnItem 
+                            title={column.title} 
+                            deleteColumn={handleDeleteColumnItem} 
+                            columnId={column.id}
+                            columnTasks={columnTasks}
+                            index={index}
+                            key={column.id} /> }) } 
                                                         
                 {provided.placeholder}
 

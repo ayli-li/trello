@@ -72,7 +72,7 @@ const renameTaskInModal = (state, { id, value }) => ({
       titleCard: value
     }
   }
-})
+});
 
 const strategyMap = {
   [ADD_TASK]: addTaskToColumn,

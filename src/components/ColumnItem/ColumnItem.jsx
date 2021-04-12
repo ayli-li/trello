@@ -52,8 +52,6 @@ export const ColumnItem = ({ title,
     setIsCreateTask(prev => !prev);
   }
 
-  const handleResetAddingTask = () => setIsCreateTask(false);
-
   const handleDeleteTask = (id, columnId) => {
     dispatch(removeTask(id));
     dispatch(removeTaskIdFromColumn(id, columnId));
@@ -81,78 +79,76 @@ export const ColumnItem = ({ title,
   }
 
   return <>
-    <Draggable 
-      key={columnId} 
-      draggableId={columnId} 
-      index={index}>
+    <Draggable draggableId={columnId} index={index} key={columnId}>
 
       {(provided, snapshot) => (
 
         <LiColumn 
           {...provided.draggableProps}
           ref={provided.innerRef}
-          isDragging={snapshot.isDragging} >
+          isDragging={snapshot.isDragging}>
+          
+          <OutsideClickHandler onOutsideClick={() => setIsCreateTask(false)}>
+            <ColumnItems>
 
-          <ColumnItems>
+              <ColumnTitleItems>
+                {showColumnTitle &&
+                  <ColumnTitle onDoubleClick={handleShowTitleInput} {...provided.dragHandleProps}>
+                    {title}
+                  </ColumnTitle> }
+                
+                {showColumnTitleInput &&
+                  <OutsideClickHandler onOutsideClick={() => handleShowOutsideTitleInput()}>
 
-            <ColumnTitleItems>
-              {showColumnTitle &&
-                <ColumnTitle onDoubleClick={handleShowTitleInput} {...provided.dragHandleProps}>
-                  {title}
-                </ColumnTitle> }
-              
-              {showColumnTitleInput &&
-                <OutsideClickHandler onOutsideClick={() => handleShowOutsideTitleInput()}>
+                    <form onSubmit={(e) => renameColumn(e)}>
+                      <ColumnTitleInput
+                        autoFocus={true} 
+                        onChange={(e) => setColumnTitleInput(e.target.value)} 
+                        value={columnTitleInput} />
+                    </form>
 
-                  <form onSubmit={(e) => renameColumn(e)}>
-                    <ColumnTitleInput
-                      autoFocus={true} 
-                      onChange={(e) => setColumnTitleInput(e.target.value)} 
-                      value={columnTitleInput} />
-                  </form>
+                  </OutsideClickHandler> }
 
-                </OutsideClickHandler> }
+                <CloseSign onClick={() => deleteColumn(columnId) }>&times;</CloseSign>
+              </ColumnTitleItems>
 
-              <CloseSign onClick={() => deleteColumn(columnId) }>&times;</CloseSign>
-            </ColumnTitleItems>
+              <Droppable key={columnId} droppableId={columnId} type='task'>
+                {(provided, snapshot) => (
 
-            <Droppable key={columnId} droppableId={columnId} type='task'>
-              {(provided, snapshot) => (
+                  <UlTasks 
+                    {...provided.droppableProps} 
+                    ref={provided.innerRef}
+                    isDraggingOver={snapshot.isDraggingOver} >
 
-                <UlTasks 
-                  {...provided.droppableProps} 
-                  ref={provided.innerRef}
-                  isDraggingOver={snapshot.isDraggingOver} >
+                    {Object.keys(columnTasks).length ?
+                      Object.keys(columnTasks).map((task, index) => 
+                        <CardTask 
+                          key={columnTasks[task].id}
+                          id={columnTasks[task].id} 
+                          value={columnTasks[task].titleCard} 
+                          columnId={columnId}
+                          description={columnTasks[task].descriptionCard}                       
+                          deleteTask={handleDeleteTask}  
+                          index={index} /> ) 
+                    : false }
 
-                  {Object.keys(columnTasks).length ?
-                    Object.keys(columnTasks).map((task, index) => 
-                      <CardTask 
-                        id={columnTasks[task].id} 
-                        value={columnTasks[task].titleCard} 
-                        columnId={columnId}
-                        description={columnTasks[task].descriptionCard}                       
-                        deleteTask={handleDeleteTask}  
-                        index={index} /> 
-                    ) 
-                  : false }
+                    {provided.placeholder}
 
-                  {provided.placeholder}
+                  </UlTasks>
+                )}
+              </Droppable>
 
-                </UlTasks>
-              )}
-            </Droppable>
+              {isCreateTask && 
+                <CreateTaskForm 
+                  value={titleCard} 
+                  setValue={setTitleCard} 
+                  addTask={handleAddTask} /> }       
 
-            {isCreateTask && 
-              <CreateTaskForm 
-                value={titleCard} 
-                setValue={setTitleCard} 
-                resetAddingTask={handleResetAddingTask}
-                addTask={handleAddTask} /> }       
-
-            <Btn addTask onClick={handleAddTask}>Add task</Btn>
-          </ColumnItems>
+              <Btn addTask onClick={handleAddTask}>Add task</Btn>              
+            </ColumnItems> 
+          </OutsideClickHandler>         
         </LiColumn>      
       )}            
-    </Draggable>
+    </Draggable>  
   </>
 }

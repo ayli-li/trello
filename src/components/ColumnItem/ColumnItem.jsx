@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
@@ -13,13 +13,18 @@ import { LiColumn, ColumnTitleItems, ColumnTitle, CloseSign, ColumnItems, UlTask
 import { ColumnTitleInput } from '../CreateColumnForm/CreateColumnFormStyled.js';
 import { Btn } from '../ColumnList/ColumnListStyled.js';
 
-export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }) => {
+export const ColumnItem = ({ title, 
+                             deleteColumn, 
+                             columnId, 
+                             columnTasks, 
+                             index }) => {
 
-  const [isCreateTask, setIsCreateTask] = useState(false);
+  
   const [titleCard, setTitleCard] = useState('');
+  const [columnTitleInput, setColumnTitleInput] = useState(title);
+  const [isCreateTask, setIsCreateTask] = useState(false);
   const [showColumnTitle, setShowColumnTitle] = useState(true);
   const [showColumnTitleInput, setShowColumnTitleInput] = useState(false);
-  const [columnTitleInput, setColumnTitleInput] = useState(title);
 
   const dispatch = useDispatch();
 
@@ -64,16 +69,37 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
   }
 
   const handleShowTitleInput = () => {
+    setColumnTitleInput(title);
     setShowColumnTitle(false);
     setShowColumnTitleInput(true);
   }
 
   // const handleClickOutsideTitleInput = (e) => {
-  //   if (e.target.value !== columnTitleInput) {
+  //   if (e.target) {
   //     setShowColumnTitle(true);
   //     setShowColumnTitleInput(false);
   //   }
   // }
+
+  // const [clickedOutside, setClickedOutside] = useState(false);
+  // const myRef = useRef();
+
+  // const handleClickOutside = (e) => {
+  //   if (!myRef.current.contains(e.target)) {
+  //     setClickedOutside(true);
+  //   }
+  // };
+
+  // const handleClickInside = () => setClickedOutside(false);
+
+  // useEffect(() => {
+  //   document.addEventListener('mousedown', handleClickOutside);
+  //   return () => document.removeEventListener('mousedown', handleClickOutside);
+  // });
+
+  // useEffect(() => {
+  //   setShowColumnTitleInput(!clickedOutside);
+  // }, [clickedOutside, setShowColumnTitleInput]);
 
   return <>
     <Draggable 
@@ -86,30 +112,29 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
         <LiColumn 
           {...provided.draggableProps}
           ref={provided.innerRef}
-          isDragging={snapshot.isDragging}
-           >
+          isDragging={snapshot.isDragging} >
 
           <ColumnItems>
-            <ColumnTitleItems {...provided.dragHandleProps} >
 
+            <ColumnTitleItems>
               {showColumnTitle &&
-                <ColumnTitle onDoubleClick={handleShowTitleInput}>
+                <ColumnTitle onDoubleClick={handleShowTitleInput} {...provided.dragHandleProps}>
                   {title}
                 </ColumnTitle> }
               
               {showColumnTitleInput &&
                 <form onSubmit={(e) => renameColumn(e)}>
                   <ColumnTitleInput 
+                    
                     autoFocus={true} 
                     onChange={(e) => setColumnTitleInput(e.target.value)} 
                     value={columnTitleInput} />
                 </form> }
 
               <CloseSign onClick={() => deleteColumn(columnId) }>&times;</CloseSign>
-
             </ColumnTitleItems>
 
-            <Droppable droppableId={columnId} type='task'>
+            <Droppable key={columnId} droppableId={columnId} type='task'>
               {(provided, snapshot) => (
 
                 <UlTasks 
@@ -142,10 +167,8 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
                 resetAddingTask={handleResetAddingTask}
                 addTask={handleAddTask} /> }       
 
-            <Btn onClick={handleAddTask}>Add task</Btn>            
-          
+            <Btn onClick={handleAddTask}>Add task</Btn>
           </ColumnItems>
-
         </LiColumn>      
       )}            
     </Draggable>

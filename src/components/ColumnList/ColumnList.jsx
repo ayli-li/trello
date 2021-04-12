@@ -48,10 +48,6 @@ export const ColumnList = () => {
     dispatch(removeColumnOrder(id));
   }
 
-  // const handleOnDragStart = () => {
-    
-  // }
-
   const handleOnDragEnd = (result) => {
 
     const { destination, source, draggableId, type } = result;
@@ -137,7 +133,6 @@ export const ColumnList = () => {
                 {provided.placeholder}
 
               </UlColumns>
-
             )}
           </Droppable>
 
@@ -150,8 +145,7 @@ export const ColumnList = () => {
         
           {!isCreateColumn && <Btn onClick={() => setIsCreateColumn(true)} >Add column +</Btn> }
 
-        </DragDropContext>
-        
+        </DragDropContext>        
       </Columns>
     </Container>
   </>

@@ -13,16 +13,12 @@ export const CreateColumnForm = ({ value, setValue, addColumn, resetAddingColumn
 
   return <>
     <ColumnCreator>
-
-      <ColumnForm onSubmit={(e) => handleSubmit(e)}> 
-
+      <ColumnForm onSubmit={(e) => handleSubmit(e)}>
         <ColumnTitleInput value={value} onChange={(e) => setValue(e.target.value)} />
         <CloseSign onClick={() => resetAddingColumn()}>&times;</CloseSign>
-
       </ColumnForm>
 
       <Btn onClick={() => addColumn()}>Add column</Btn>
-
     </ColumnCreator>
   </>
 }

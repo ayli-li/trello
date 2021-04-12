@@ -40,7 +40,6 @@ export const ColumnTitle = styled.span`
 export const CloseSign = styled.span`
   cursor: pointer;
   font-size: 22px;
-  padding-top: ${props => (props.taskCloseSign ? '6px' : '0')};
 
   :hover {
     color: rgba(0,255,255, 0.7);

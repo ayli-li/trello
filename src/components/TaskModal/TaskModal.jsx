@@ -92,7 +92,6 @@ export const TaskModal = ({ value, showModal, description, id, columnId, deleteT
     <ModalWindow ref={myRef} onClick={handleClickInside} >
 
       <ModalHeader>
-
         {showTaskValue && 
           <ModalTitle onDoubleClick={handleShowTaskValue}>
             {value}
@@ -104,14 +103,11 @@ export const TaskModal = ({ value, showModal, description, id, columnId, deleteT
           </form> }
 
         <CloseSign className='close_symbol' onClick={() => showModal(false) }>&times;</CloseSign>
-
       </ModalHeader>
 
       {showModalForm && 
-
         <ModalFormContent>
           <ModalForm onSubmit={handleFormSubmit}>
-
             <TaskTextarea
               modalTextarea
               rows={3}
@@ -119,27 +115,21 @@ export const TaskModal = ({ value, showModal, description, id, columnId, deleteT
               onChange={(e) => setModalDescription(e.target.value) }
               onKeyDown={(e) => onEnterPress(e)}
               placeholder="Input task's description"
-              value={modalDescription} />          
-
+              value={modalDescription} />
           </ModalForm>
 
           <Btn onClick={addDescription}>Add description</Btn>
-
         </ModalFormContent> }
 
       {description && !showModalForm &&
-
         <ModalDescription>
-
           Description: 
           <DescriptionValue onDoubleClick={() => setShowModalForm(true) } >
             {description}
           </DescriptionValue>
-
         </ModalDescription> }
 
       <Btn deleteTask onClick={handleDeleteTask}>Delete task</Btn>
-
     </ModalWindow>
   </>
 }

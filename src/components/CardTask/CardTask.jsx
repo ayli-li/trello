@@ -21,9 +21,7 @@ export const CardTask = ({ id, value, columnId, description, deleteTask, index }
           isDragging={snapshot.isDragging} 
           {...provided.dragHandleProps} 
           onClick={() => setIsShowModal(true)} >
-
-          {value}
-          
+          {value}          
         </TaskValue>          
         
         {isShowModal && 
@@ -33,11 +31,8 @@ export const CardTask = ({ id, value, columnId, description, deleteTask, index }
             value={value}
             description={description}
             showModal={setIsShowModal}
-            deleteTask={deleteTask} /> }
-                 
+            deleteTask={deleteTask} /> }                 
       </LiTask>
-
     )}
-
   </Draggable>
 }

@@ -18,9 +18,9 @@ export const CreateTaskForm = ({ value, setValue, resetAddingTask, addTask }) =>
   }
 
   return <>
-    <ColumnForm onSubmit={handleSubmit} formTextarea>
-    
+    <ColumnForm onSubmit={handleSubmit} formTextarea>    
         <TaskTextarea 
+          autoFocus={true}
           rows={3} 
           cols={21} 
           value={value} 
@@ -28,8 +28,7 @@ export const CreateTaskForm = ({ value, setValue, resetAddingTask, addTask }) =>
           onKeyDown={(e) => onEnterPress(e)} 
           placeholder="Input title card" />
 
-        <CloseSign taskCloseSign onClick={() => resetAddingTask()}>&times;</CloseSign>  
-
+        <CloseSign onClick={() => resetAddingTask()}>&times;</CloseSign> 
     </ColumnForm>
   
   </>

@@ -1,5 +1,4 @@
 import React from 'react';
-//import OutsideClickHandler from 'react-outside-click-handler';
 
 import { TaskTextarea } from './CreateTaskFormStyled.js';
 import { ColumnForm } from '../CreateColumnForm/CreateColumnFormStyled.js';

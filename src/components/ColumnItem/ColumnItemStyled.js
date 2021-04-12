@@ -21,26 +21,26 @@ export const ColumnTitleItems = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;  
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 10px;
   box-sizing: border-box;
+  width: 188.4px;
 `;
 
 export const ColumnTitle = styled.span`
   color: #172b4d;
   font-size: 18px;
+  max-width: 160px;
   font-weight: 500;
   word-wrap: break-word;
-  width: 170px;
-  margin-right: 5px; 
+  cursor: pointer;  
+  margin-top: 3px;
 `;
 
 export const CloseSign = styled.span`
   cursor: pointer;
   font-size: 22px;
-  margin-right: 2px;
-  padding-top: ${props => (props.taskCloseSign) ? '6px' : '0'};
-  padding-right: ${props => (props.taskCloseSign) ? '1px' : '0'};
+  padding-top: ${props => (props.taskCloseSign ? '6px' : '0')};
 
   :hover {
     color: rgba(0,255,255, 0.7);

@@ -8,7 +8,7 @@ export const LiTask = styled.li`
 export const TaskValue = styled.div`
   vertical-align: center;
   box-sizing: border-box;
-  padding: 9px 0 9px 5px;
+  padding: 9px 5px;
   width: 189px;
   border: 0.5px solid lightgray;
   list-style: none;

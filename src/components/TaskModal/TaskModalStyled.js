@@ -28,7 +28,7 @@ export const ModalWindow = styled.div`
 
 export const ModalHeader = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 20px;
 `;
@@ -36,6 +36,7 @@ export const ModalHeader = styled.div`
 export const ModalTitle = styled.span`
   font-weight: 500;
   word-break: break-word;
+  margin-top: 5px;
   padding-right: 15px;
   padding-left: 3px;
   cursor: pointer;

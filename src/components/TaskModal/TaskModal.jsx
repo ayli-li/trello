@@ -67,7 +67,7 @@ export const TaskModal = ({ value, showModal, description, id, columnId, deleteT
     showModal(false);
   }
 
-  const handleSubmit = () => {
+  const handleFormSubmit = () => {
     if (modalDescription) {
       dispatch(addTaskDescription(modalDescription, id));
       setShowModalForm(false);
@@ -77,11 +77,11 @@ export const TaskModal = ({ value, showModal, description, id, columnId, deleteT
   const onEnterPress = (e) => {
     if (e.keyCode === 13 && e.shiftKey === false) {
       e.preventDefault();
-      handleSubmit();
+      handleFormSubmit();
     }
   }
 
-  const handleShowValue = () => {
+  const handleShowTaskValue = () => {
     setShowTaskValue(false);
     setShowTaskValueInput(true);
   }
@@ -89,12 +89,12 @@ export const TaskModal = ({ value, showModal, description, id, columnId, deleteT
   return <>
     <ModalOverlay />
 
-    <ModalWindow ref={myRef} onClick={handleClickInside}>
+    <ModalWindow ref={myRef} onClick={handleClickInside} >
 
       <ModalHeader>
 
         {showTaskValue && 
-          <ModalTitle onDoubleClick={handleShowValue}>
+          <ModalTitle onDoubleClick={handleShowTaskValue}>
             {value}
           </ModalTitle> }
 
@@ -110,7 +110,7 @@ export const TaskModal = ({ value, showModal, description, id, columnId, deleteT
       {showModalForm && 
 
         <ModalFormContent>
-          <ModalForm onSubmit={handleSubmit}>
+          <ModalForm onSubmit={handleFormSubmit}>
 
             <TaskTextarea
               modalTextarea

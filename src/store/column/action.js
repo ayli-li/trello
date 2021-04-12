@@ -4,7 +4,8 @@ import {
   ADD_TASK_ID,
   REMOVE_TASK_ID,
   SWITCH_TASKS_ORDER_IN_THE_SAME_COLUMN,
-  SWITCH_TASKS_ORDER_IN_THE_DIFFERENT_COLUMNS
+  SWITCH_TASKS_ORDER_IN_THE_DIFFERENT_COLUMNS,
+  RENAME_COLUMN
 } from './constants';
 
 export const addColumn = (column) => ({
@@ -38,4 +39,10 @@ export const switchTasksOrderInTheDifferentColumns = (startColumn, finishColumn)
   type: SWITCH_TASKS_ORDER_IN_THE_DIFFERENT_COLUMNS,
   startColumn,
   finishColumn
-})
+});
+
+export const renameColumnTitle = (id, title) => ({
+  type: RENAME_COLUMN,
+  id,
+  title
+});

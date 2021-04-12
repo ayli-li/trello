@@ -7,15 +7,19 @@ import { CreateTaskForm } from '../CreateTaskForm/CreateTaskForm';
 import { CardTask } from '../CardTask/CardTask';
 
 import { addTask, removeTask } from '../../store/task/action';
-import { addTaskIdToColumn, removeTaskIdFromColumn } from '../../store/column/action';
+import { addTaskIdToColumn, removeTaskIdFromColumn, renameColumnTitle } from '../../store/column/action';
 
 import { LiColumn, ColumnTitleItems, ColumnTitle, CloseSign, ColumnItems, UlTasks } from './ColumnItemStyled.js';
+import { ColumnTitleInput } from '../CreateColumnForm/CreateColumnFormStyled.js';
 import { Btn } from '../ColumnList/ColumnListStyled.js';
 
 export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }) => {
 
   const [isCreateTask, setIsCreateTask] = useState(false);
   const [titleCard, setTitleCard] = useState('');
+  const [showColumnTitle, setShowColumnTitle] = useState(true);
+  const [showColumnTitleInput, setShowColumnTitleInput] = useState(false);
+  const [columnTitleInput, setColumnTitleInput] = useState(title);
 
   const dispatch = useDispatch();
 
@@ -49,6 +53,28 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
     dispatch(removeTaskIdFromColumn(id, columnId));
   }
 
+  const renameColumn = (e) => {
+    e.preventDefault();
+
+    if (columnTitleInput) {      
+      dispatch(renameColumnTitle(columnId, columnTitleInput));
+      setShowColumnTitle(true);
+      setShowColumnTitleInput(false);
+    }
+  }
+
+  const handleShowTitleInput = () => {
+    setShowColumnTitle(false);
+    setShowColumnTitleInput(true);
+  }
+
+  // const handleClickOutsideTitleInput = (e) => {
+  //   if (e.target.value !== columnTitleInput) {
+  //     setShowColumnTitle(true);
+  //     setShowColumnTitleInput(false);
+  //   }
+  // }
+
   return <>
     <Draggable 
       key={columnId} 
@@ -60,13 +86,27 @@ export const ColumnItem = ({ title, deleteColumn, columnId, columnTasks, index }
         <LiColumn 
           {...provided.draggableProps}
           ref={provided.innerRef}
-          isDragging={snapshot.isDragging} >
+          isDragging={snapshot.isDragging}
+           >
 
           <ColumnItems>
+            <ColumnTitleItems {...provided.dragHandleProps} >
 
-            <ColumnTitleItems {...provided.dragHandleProps}>
-              <ColumnTitle>{title}</ColumnTitle>
+              {showColumnTitle &&
+                <ColumnTitle onDoubleClick={handleShowTitleInput}>
+                  {title}
+                </ColumnTitle> }
+              
+              {showColumnTitleInput &&
+                <form onSubmit={(e) => renameColumn(e)}>
+                  <ColumnTitleInput 
+                    autoFocus={true} 
+                    onChange={(e) => setColumnTitleInput(e.target.value)} 
+                    value={columnTitleInput} />
+                </form> }
+
               <CloseSign onClick={() => deleteColumn(columnId) }>&times;</CloseSign>
+
             </ColumnTitleItems>
 
             <Droppable droppableId={columnId} type='task'>

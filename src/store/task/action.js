@@ -25,4 +25,4 @@ export const renameTaskInModal = (id, value) => ({
   type: RENAME_TASK,
   id,
   value
-})
+});

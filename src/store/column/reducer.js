@@ -5,7 +5,8 @@ import {
   ADD_TASK_ID,
   REMOVE_TASK_ID,
   SWITCH_TASKS_ORDER_IN_THE_SAME_COLUMN,
-  SWITCH_TASKS_ORDER_IN_THE_DIFFERENT_COLUMNS
+  SWITCH_TASKS_ORDER_IN_THE_DIFFERENT_COLUMNS,
+  RENAME_COLUMN
 } from "./constants";
 
 // const mockInitialState = [
@@ -76,6 +77,17 @@ const switchTasksOrderInTheDifferentColumns = (state, { startColumn, finishColum
     [startColumn.id]: startColumn,
     [finishColumn.id]: finishColumn,
   }
+});
+
+const renameColumnTitle = (state, { id, title }) => ({
+  ...state,
+  columnList: {
+    ...state.columnList,
+    [id]: {
+      ...state.columnList[id],
+      title
+    }
+  }
 })
 
 
@@ -85,7 +97,8 @@ const strategyMap = {
   [ADD_TASK_ID]: addTaskIdToColumn,
   [REMOVE_TASK_ID]: removeTaskIdFromColumn,
   [SWITCH_TASKS_ORDER_IN_THE_SAME_COLUMN]: switchTasksOrderInTheSameColumn,
-  [SWITCH_TASKS_ORDER_IN_THE_DIFFERENT_COLUMNS]: switchTasksOrderInTheDifferentColumns
+  [SWITCH_TASKS_ORDER_IN_THE_DIFFERENT_COLUMNS]: switchTasksOrderInTheDifferentColumns,
+  [RENAME_COLUMN]: renameColumnTitle
 };
 
 const columnReducer = createReducer(strategyMap, initialState);

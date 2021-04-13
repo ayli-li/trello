@@ -109,7 +109,6 @@ export const TaskModal = ({ value, showModal, description, id, columnId, deleteT
         <ModalFormContent>
           <ModalForm onSubmit={handleFormSubmit}>
             <TaskTextarea
-              modalTextarea
               rows={3}
               cols={30}               
               onChange={(e) => setModalDescription(e.target.value) }

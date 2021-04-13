@@ -12,7 +12,6 @@ export const TaskTextarea = styled.textarea`
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin-bottom: ${props => (props.modalTextarea ? '15px' : '0')};
 
   :focus {
     outline: none;

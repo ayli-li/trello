@@ -35,7 +35,7 @@ export const Btn = styled.button`
   border: 0.5px solid lightgray;
   color: ${props => (props.deleteTask || props.addTask ? 'white' : '#172b4d')};
   padding: 4px;
-  margin: ${props => (props.deleteTask ? '20px 0 0 0' : '0')};
+  margin: ${props => (props.description ? '0 0 20px 0' : '0')};
   border-radius: 5px;
   cursor: pointer;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;

@@ -55,11 +55,12 @@ export const ModalForm = styled.form`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-bottom: 25px;
 `;
 
 export const ModalDescription = styled.div`
-  margin-bottom: 15px;
   padding-left: 3px;
+  margin-bottom: 20px;
 `;
 
 export const DescriptionValue = styled.div`

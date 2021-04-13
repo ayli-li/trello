@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Main from './containers/main';
+import { ColumnList } from './components/ColumnList/ColumnList';
 
-const App = () => (
-  <>
-    <Main />
-  </>
-);
+const App = () => {  
+  return (
+    <ColumnList />
+  )
+}
 
 export default App;
